@@ -14,7 +14,9 @@ Cả hai workflow **tự bỏ qua** (chỉ in notice) khi chưa có secrets, nê
 
 **Cách A (đơn giản nhất): Vercel Git Integration**
 1. vercel.com → *Add New Project* → import repo `kinh-dich-app`.
-2. Root Directory: để trống (gốc repo). `vercel.json` đã đặt install/build/output (`apps/web/dist`).
+2. Root Directory: để trống (gốc repo, dùng `vercel.json` ở gốc) **hoặc** `apps/web` (dùng `apps/web/vercel.json`).
+   Cả hai file đã đặt install/build/output và ghi đè cài đặt trên dashboard — không cần chỉnh Build/Output Directory trong Project Settings.
+   Nếu gặp `STATIC_BUILD_NO_OUT_DIR`: kiểm tra Root Directory là một trong hai giá trị trên.
 3. Deploy. Khi dùng cách này thì không cần secrets cho `deploy-web.yml` (workflow sẽ tự bỏ qua).
 
 **Cách B: deploy qua GitHub Actions**
