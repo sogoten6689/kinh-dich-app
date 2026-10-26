@@ -28,18 +28,15 @@ Deploy tay từ máy: `npx vercel` (preview) / `npx vercel --prod`.
 
 ## Mobile — Expo EAS
 
-1. Tạo tài khoản expo.dev, rồi ở `apps/mobile`:
-   ```bash
-   npx eas-cli login
-   npx eas-cli init          # tạo project, in ra projectId
-   ```
+1. Project EAS đã liên kết: projectId `c946102a-7cad-4886-9743-b9c29f7048cb` nằm trong `apps/mobile/app.config.ts`
+   (tương đương `eas init --id …`). Muốn dùng project khác thì đặt biến `EAS_PROJECT_ID`.
 2. GitHub → Settings → Secrets and variables → Actions:
    - Secret `EXPO_TOKEN` (expo.dev → Account settings → Access tokens).
-   - Variable `EAS_PROJECT_ID` = projectId ở bước 1.
+   - (Tùy chọn) Variable `EAS_PROJECT_ID` để ghi đè projectId mặc định.
    - Variable `EXPO_OWNER` = username/organization Expo (nếu project thuộc organization).
 3. Bản cài đặt đầu tiên (OTA chỉ áp dụng cho app đã cài có cùng `runtimeVersion`):
    - Actions → *Deploy mobile (Expo EAS)* → *Run workflow* → `build = true`, chọn nền tảng.
-   - Hoặc từ máy: `EAS_PROJECT_ID=<id> npx eas-cli build --profile preview --platform android`.
+   - Hoặc từ máy: `npx eas-cli login && npx eas-cli build --profile preview --platform android`.
    - iOS cần tài khoản Apple Developer; EAS sẽ hỏi credentials ở lần build đầu (chạy tay từ máy).
 4. Sau đó mỗi PR / push `main` sẽ đẩy EAS Update lên kênh tương ứng.
 5. Lên store: `npx eas-cli build --profile production` rồi `npx eas-cli submit`.

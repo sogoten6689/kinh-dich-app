@@ -1,8 +1,8 @@
 import type { ExpoConfig } from "expo/config";
 
-// EAS project id lấy từ biến môi trường (GitHub Actions variable / `eas init`),
-// để repo không phụ thuộc tài khoản Expo cụ thể.
-const projectId = process.env.EAS_PROJECT_ID;
+// EAS project id (tương đương `eas init --id`). Có thể ghi đè bằng biến môi trường EAS_PROJECT_ID.
+const DEFAULT_EAS_PROJECT_ID = "c946102a-7cad-4886-9743-b9c29f7048cb";
+const projectId = process.env.EAS_PROJECT_ID || DEFAULT_EAS_PROJECT_ID;
 
 const config: ExpoConfig = {
   name: "Kinh Dịch",
