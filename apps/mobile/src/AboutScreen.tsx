@@ -1,5 +1,6 @@
-import { ABOUT, APP_INFO, GLOSSARY } from "@kinh-dich/core";
-import { StyleSheet, Text, View } from "react-native";
+import { ABOUT, APP_INFO, buildInfoRows, GLOSSARY } from "@kinh-dich/core";
+import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
+import { mobileBuildInfo } from "./buildInfo";
 import { Logo } from "./Logo";
 import { colors } from "./theme";
 
@@ -11,6 +12,11 @@ export function AboutScreen() {
         <View style={{ flex: 1 }}>
           <Text style={styles.h2}>{APP_INFO.name}</Text>
           <Text style={styles.muted}>{ABOUT.intro}</Text>
+          <Pressable onPress={() => Linking.openURL(APP_INFO.website)} accessibilityRole="link">
+            <Text style={styles.muted}>
+              Trang chính thức: <Text style={styles.link}>{APP_INFO.website.replace("https://", "")}</Text>
+            </Text>
+          </Pressable>
         </View>
       </View>
 
@@ -48,6 +54,16 @@ export function AboutScreen() {
         <Text style={styles.muted}>v{APP_INFO.version}</Text>
       </View>
 
+      <Text style={styles.h3}>Thông tin bản đang chạy</Text>
+      <View style={styles.info} accessibilityLabel="Thông tin bản đang chạy">
+        {buildInfoRows(mobileBuildInfo()).map((r) => (
+          <View key={r.label} style={styles.infoRow}>
+            <Text style={[styles.muted, styles.infoLabel]}>{r.label}</Text>
+            <Text style={styles.infoValue}>{r.value}</Text>
+          </View>
+        ))}
+      </View>
+
       <Text style={styles.h3}>Thuật ngữ</Text>
       {GLOSSARY.map((g) => (
         <View key={g.key} style={styles.term}>
@@ -74,5 +90,10 @@ const styles = StyleSheet.create({
   avatar: { width: 54, height: 54, borderRadius: 27, backgroundColor: colors.accent, alignItems: "center", justifyContent: "center" },
   avatarText: { color: "#fff", fontWeight: "700", fontSize: 18, fontFamily: "serif" },
   eyebrow: { fontSize: 11, letterSpacing: 1, color: colors.accent, fontWeight: "700" },
+  link: { color: colors.accent, fontWeight: "700" },
+  info: { padding: 14, borderRadius: 10, backgroundColor: colors.surface, gap: 6 },
+  infoRow: { flexDirection: "row", gap: 12 },
+  infoLabel: { width: 110 },
+  infoValue: { flex: 1, color: colors.fg },
   term: { padding: 12, borderRadius: 10, backgroundColor: colors.surface, gap: 4 },
 });

@@ -12,6 +12,8 @@ Cả hai workflow **tự bỏ qua** (chỉ in notice) khi chưa có secrets, nê
 
 ## Web — Vercel
 
+Ứng dụng chính thức (production): **https://kinhdich-app.vercel.app**. Trang Giới thiệu hiện môi trường Vercel và commit đã deploy (`VERCEL_ENV`, `VERCEL_GIT_COMMIT_SHA`, nhúng lúc build qua `apps/web/vite.config.ts`).
+
 **Cách A (đơn giản nhất): Vercel Git Integration**
 1. vercel.com → *Add New Project* → import repo `kinh-dich-app`.
 2. Root Directory: để trống (gốc repo, dùng `vercel.json` ở gốc) **hoặc** `apps/web` (dùng `apps/web/vercel.json`).

@@ -6,6 +6,8 @@ export const APP_INFO = {
   version: "0.3.0",
   author: "Lam Nguyen",
   organization: "Egitech",
+  /** Trang web chính thức. */
+  website: "https://kinhdich-app.vercel.app",
 } as const;
 
 export type CastMethod = "coins" | "yarrow" | "numbers";

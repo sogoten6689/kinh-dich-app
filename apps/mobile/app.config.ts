@@ -22,7 +22,14 @@ const config: ExpoConfig = {
   web: { favicon: "./assets/favicon.png" },
   // Fingerprint: runtime tự đổi khi phần native đổi, nên EAS Update không bao giờ gửi JS lên bản cài không tương thích.
   runtimeVersion: { policy: "fingerprint" },
-  ...(projectId ? { updates: { url: `https://u.expo.dev/${projectId}` }, extra: { eas: { projectId } } } : {}),
+  ...(projectId ? { updates: { url: `https://u.expo.dev/${projectId}` } } : {}),
+  extra: {
+    ...(projectId ? { eas: { projectId } } : {}),
+    // EAS đặt hai biến này khi build; app hiện chúng ở trang Giới thiệu (Thông tin bản đang chạy).
+    // Bản cập nhật OTA (eas update) không có hai biến này, khi đó app chỉ hiện kênh và số build.
+    easBuildProfile: process.env.EAS_BUILD_PROFILE ?? null,
+    easBuildId: process.env.EAS_BUILD_ID ?? null,
+  },
 };
 
 export default config;

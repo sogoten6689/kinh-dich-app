@@ -2,7 +2,7 @@
 
 Gieo quẻ và tra cứu Kinh Dịch bằng tiếng Việt: **web** (Vite + React, deploy Vercel) và **mobile** (Expo / React Native, build trên EAS), dùng chung lõi `@kinh-dich/core`.
 
-Tác giả: **Lam Nguyen — Egitech**.
+Ứng dụng chính thức: **https://kinhdich-app.vercel.app** · Tác giả: **Lam Nguyen — Egitech**.
 
 ## Tính năng
 
@@ -197,5 +197,6 @@ sequenceDiagram
 | Mở app chỉ thấy "Development servers" | Đang dùng development build | Chạy `npx expo start` trong `apps/mobile` (cùng Wi-Fi) hoặc cài bản `apk` |
 | Vercel `STATIC_BUILD_NO_OUT_DIR` | Root Directory = `apps/web` mà dashboard đặt output sai | Đã có `apps/web/vercel.json` ghi đè; kiểm tra Root Directory |
 | App không nhận bản mới | Update chưa phát hành hoặc khác kênh | Kiểm tra expo.dev → Updates; tắt hẳn app và mở lại hai lần |
+| Không biết đang chạy bản nào | — | Trang **Giới thiệu → Thông tin bản đang chạy**: kênh cập nhật, mã build, profile build, bản cập nhật |
 
 Chi tiết từng bước: [docs/DEPLOY.md](docs/DEPLOY.md).

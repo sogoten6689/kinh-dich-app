@@ -144,6 +144,17 @@ describe("web app", () => {
     expect(author).toHaveTextContent("Egitech");
   });
 
+  it("F-ABOUT-03 giới thiệu có link chính thức và thông tin bản đang chạy", () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: "Giới thiệu" }));
+    expect(screen.getByRole("link", { name: "kinhdich-app.vercel.app" })).toHaveAttribute("href", "https://kinhdich-app.vercel.app");
+    const info = screen.getByRole("region", { name: "Thông tin bản đang chạy" });
+    expect(within(info).getByText("Kênh cập nhật")).toBeInTheDocument();
+    expect(within(info).getByText("Mã build")).toBeInTheDocument();
+    // Khi test không chạy trên Vercel nên không có kênh và commit.
+    expect(within(info).getByText("Chạy trên máy (không qua Vercel)")).toBeInTheDocument();
+  });
+
   it("vẽ hào thượng ở trên, hào sơ ở dưới, đánh dấu hào động", () => {
     render(<HexagramFigure hexagram={hexagramByNumber(3)} changingLines={[1]} />);
     const lines = screen.getAllByTestId(/^line-/);

@@ -74,6 +74,7 @@ Trạng thái: ✅ đã có · 🟡 một phần · ⬜ chưa làm. Mỗi mã t�
 | Mã | Mô tả | Tiêu chí chấp nhận | Web | Mobile |
 |---|---|---|---|---|
 | F-ABOUT-01 | Trang giới thiệu | Kinh Dịch là gì, tính năng, cách dùng, lưu ý, **tác giả: Lam Nguyen — Egitech**, phiên bản | ✅ | ✅ |
+| F-ABOUT-03 | Thông tin bản đang chạy & link chính thức | Link https://kinhdich-app.vercel.app. Web: kênh = môi trường Vercel, mã build = commit. Mobile: kênh EAS Update, mã build (phiên bản + versionCode), profile build (development / preview / apk / production), mã build EAS, runtime, bản cập nhật OTA hay bản gốc; dữ liệu lạ từ module native không làm sập trang | ✅ | ✅ |
 | F-ABOUT-02 | Logo & icon | Logo ấn son quẻ Ly ☲; favicon SVG, apple-touch-icon; icon app, adaptive icon Android, splash | ✅ | ✅ |
 
 ### 4.5 Lịch sử & chia sẻ (`F-HIST`) — sau này
