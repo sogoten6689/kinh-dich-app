@@ -34,6 +34,9 @@ Project EAS: `c946102a-7cad-4886-9743-b9c29f7048cb` (đã có trong `apps/mobile
 
 ### 1. Kết nối (làm một lần)
 
+> Mọi lệnh `eas …` phải chạy trong `apps/mobile` (hoặc dùng script ở gốc repo: `npm run eas:build:android:dev`, `npm run eas:build:ios:dev`, `npm run eas:build:android:preview`).
+> Chạy ở gốc repo sẽ gặp `Failed to read "/eas.json"` — **đừng** chạy `eas build:configure` ở gốc. Build từ GitHub trên expo.dev cũng gặp lỗi này nếu chưa đặt *Base directory* = `apps/mobile`.
+
 1. **Đăng nhập và kiểm tra project** (trên máy bạn):
    ```bash
    npm install -g eas-cli
