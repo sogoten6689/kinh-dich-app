@@ -9,7 +9,7 @@
 |---|---|---|
 | `packages/core` | `@kinh-dich/core` | Lõi TypeScript thuần: bát quái, 64 quẻ, gieo quẻ, hỗ/biến/thác/tổng quái, Mai Hoa, ngũ hành. **Không** import React/DOM/RN. |
 | `apps/web` | `@kinh-dich/web` | Vite + React 18. Test: Vitest + Testing Library (jsdom). Deploy: Vercel. |
-| `apps/mobile` | `@kinh-dich/mobile` | Expo SDK 52 / React Native 0.76. Typecheck + bundle check. Deploy: EAS Update / EAS Build. |
+| `apps/mobile` | `@kinh-dich/mobile` | Expo SDK 52 / React Native 0.76. Typecheck + bundle check. Deploy: EAS Workflows (`apps/mobile/.eas/workflows/`), runtimeVersion theo fingerprint. |
 
 Core được dùng trực tiếp từ source (`main: src/index.ts`), không có bước build.
 

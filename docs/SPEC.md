@@ -102,7 +102,7 @@ Quy ước đầy đủ: `docs/kinh-dich.md`.
 ## 7. Phát hành
 
 - Web: Vercel, preview cho mỗi PR, production khi merge `main`.
-- Mobile: EAS Update (OTA). Bản 0.2.0 thêm `react-native-svg` (native) nên cần **build mới** (`runtimeVersion` = 0.2.0).
+- Mobile: EAS Workflows chạy trên máy chủ Expo (`apps/mobile/.eas/workflows/`): PR → kênh `preview`, `main` → kênh `production`; tự build lại khi fingerprint native đổi, nếu không chỉ đẩy EAS Update. Bản 0.2.0 thêm `react-native-svg` (native) nên lần đầu cần **build mới**.
 - Chi tiết: `docs/DEPLOY.md`.
 
 ## 8. Lộ trình

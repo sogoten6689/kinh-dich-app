@@ -1,0 +1,36 @@
+# Chạy trên máy chủ Expo khi có pull request vào main (cần kết nối GitHub trong expo.dev, xem docs/DEPLOY.md).
+# Nếu phần native không đổi (fingerprint đã có bản build) → chỉ đẩy EAS Update lên kênh preview.
+# Nếu phần native đổi → build APK Android mới (profile preview) để cài thử.
+name: Preview (PR)
+
+on:
+  pull_request:
+    branches: ['main']
+
+jobs:
+  fingerprint:
+    name: Fingerprint
+    type: fingerprint
+  get_android_build:
+    name: Tìm bản build Android cùng fingerprint
+    needs: [fingerprint]
+    type: get-build
+    params:
+      fingerprint_hash: ${{ needs.fingerprint.outputs.android_fingerprint_hash }}
+      profile: preview
+  build_android:
+    name: Build Android (APK preview)
+    needs: [get_android_build]
+    if: ${{ !needs.get_android_build.outputs.build_id }}
+    type: build
+    params:
+      platform: android
+      profile: preview
+  publish_android_update:
+    name: Đẩy EAS Update (preview)
+    needs: [get_android_build]
+    if: ${{ needs.get_android_build.outputs.build_id }}
+    type: update
+    params:
+      branch: preview
+      platform: android

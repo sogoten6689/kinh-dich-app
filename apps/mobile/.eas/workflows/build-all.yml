@@ -1,0 +1,17 @@
+# Chạy tay: `eas workflow:run build-all.yml --ref main` (trong apps/mobile), hoặc nút Run trên expo.dev → Workflows.
+# Build bản cài thử cho cả Android (APK) và iOS (cần Apple Developer + chứng chỉ đã tạo).
+name: Build preview (Android + iOS)
+
+jobs:
+  build_android:
+    name: Build Android (APK preview)
+    type: build
+    params:
+      platform: android
+      profile: preview
+  build_ios:
+    name: Build iOS (preview, internal)
+    type: build
+    params:
+      platform: ios
+      profile: preview
