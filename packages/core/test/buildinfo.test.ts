@@ -8,6 +8,10 @@ describe("F-ABOUT-03 thông tin bản đang chạy", () => {
     expect(APP_INFO.website).toBe("https://kinhdich-app.vercel.app");
   });
 
+  it("F-ABOUT-04 link tải app Android", () => {
+    expect(APP_INFO.androidDownload).toMatch(/^https:\/\/0316888896-my\.sharepoint\.com\//);
+  });
+
   it("mobile chạy bản gốc trong file cài", () => {
     const rows = buildInfoRows({ platform: "android", channel: "production", build: "0.3.0 (12)", profile: "apk", easBuildId: "d0d09cdf-523b-4368-86d7-fff847996353", runtime: "9a5d1c6296bb48ba9841bf6a72aa1af2ad59eb4d", update: null });
     expect(rows.map((r) => r.label)).toEqual(["Nền tảng", "Phiên bản", "Kênh cập nhật", "Mã build", "Profile build", "Mã build EAS", "Runtime", "Bản cập nhật"]);

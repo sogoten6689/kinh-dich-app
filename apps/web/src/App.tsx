@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { AboutView } from "./components/AboutView";
 import { BaguaView } from "./components/BaguaView";
 import { CastPanel } from "./components/CastPanel";
+import { DownloadMenu } from "./components/DownloadMenu";
 import { HexagramList } from "./components/HexagramList";
 import { Logo } from "./components/Logo";
 
@@ -44,6 +45,7 @@ export function App() {
             <small>{APP_INFO.tagline}</small>
           </span>
         </a>
+        <DownloadMenu />
         <nav aria-label="Chức năng">
           {TABS.map((t) => (
             <button key={t.id} className={tab === t.id ? "active" : ""} aria-current={tab === t.id ? "page" : undefined} onClick={() => go(t.id)}>

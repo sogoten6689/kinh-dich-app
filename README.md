@@ -2,7 +2,9 @@
 
 Gieo quẻ và tra cứu Kinh Dịch bằng tiếng Việt: **web** (Vite + React, deploy Vercel) và **mobile** (Expo / React Native, build trên EAS), dùng chung lõi `@kinh-dich/core`.
 
-Ứng dụng chính thức: **https://kinhdich-app.vercel.app** · Tác giả: **Lam Nguyen — Egitech**.
+Ứng dụng chính thức: **https://kinhdich-app.vercel.app** · Tải app Android (APK): **[link tải](https://0316888896-my.sharepoint.com/:u:/g/personal/lam_nguyen_egitech_vn/IQCKdy4mfH-rRahfrVvPH-XzAVTKsPP3IP2k9rFLE7pwVkw?e=EqrZfs)** · Tác giả: **Lam Nguyen — Egitech**.
+
+Mã QR cài app Android có ở nút **"Tải app Android"** trên web và trong trang **Giới thiệu** (web và app).
 
 ## Tính năng
 
