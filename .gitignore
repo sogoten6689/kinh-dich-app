@@ -1,0 +1,15 @@
+node_modules/
+dist/
+build/
+coverage/
+.expo/
+web-build/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+.claude/settings.local.json
+.claude/state/
+dist-bundle-check/
+.vercel/
