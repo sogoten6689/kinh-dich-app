@@ -11,3 +11,4 @@ export * from "./glossary";
 export * from "./content";
 export * from "./topics";
 export * from "./buildinfo";
+export * from "./qr";

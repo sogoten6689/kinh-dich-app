@@ -8,6 +8,8 @@ export const APP_INFO = {
   organization: "Egitech",
   /** Trang web chính thức. */
   website: "https://kinhdich-app.vercel.app",
+  /** File cài Android (APK) bản mới nhất, lưu trên SharePoint của Egitech. */
+  androidDownload: "https://0316888896-my.sharepoint.com/:u:/g/personal/lam_nguyen_egitech_vn/IQCKdy4mfH-rRahfrVvPH-XzAVTKsPP3IP2k9rFLE7pwVkw?e=EqrZfs",
 } as const;
 
 export type CastMethod = "coins" | "yarrow" | "numbers";

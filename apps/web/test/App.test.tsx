@@ -155,6 +155,20 @@ describe("web app", () => {
     expect(within(info).getByText("Chạy trên máy (không qua Vercel)")).toBeInTheDocument();
   });
 
+  it("F-ABOUT-04 link tải app Android và mã QR", () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: "Tải app Android" }));
+    const pop = screen.getByRole("dialog", { name: "Cài app Android" });
+    expect(within(pop).getByRole("img", { name: "Mã QR cài app Android" })).toBeInTheDocument();
+    const top = within(pop).getByRole("link", { name: "Tải APK trên máy này" });
+    expect(top.getAttribute("href")).toMatch(/^https:\/\/0316888896-my\.sharepoint\.com\//);
+    fireEvent.click(screen.getByRole("button", { name: "Giới thiệu" }));
+    const dl = screen.getByRole("region", { name: "Tải app" });
+    expect(within(dl).getByRole("link", { name: "Tải app Android (APK)" })).toHaveAttribute("href", top.getAttribute("href"));
+    const qr = within(dl).getByRole("img", { name: "Mã QR tải app Android" });
+    expect(qr.querySelector("path")?.getAttribute("d")).toMatch(/^M\d+ \d+h1v1h-1z/);
+  });
+
   it("vẽ hào thượng ở trên, hào sơ ở dưới, đánh dấu hào động", () => {
     render(<HexagramFigure hexagram={hexagramByNumber(3)} changingLines={[1]} />);
     const lines = screen.getAllByTestId(/^line-/);

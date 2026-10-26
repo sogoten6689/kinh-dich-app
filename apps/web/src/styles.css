@@ -351,3 +351,17 @@ button.hexagram:hover { background: var(--card); border-color: var(--line); }
 .build-info dl div { display: contents; }
 .build-info dt { color: var(--muted); }
 .build-info dd { margin: 0; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+
+/* Link tải app */
+.download-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; background: var(--accent); color: #fff; font-weight: 600; font-size: 14px; text-decoration: none; width: max-content; }
+.download-btn:hover { filter: brightness(1.08); }
+.download-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.download-menu { position: relative; margin-left: auto; }
+button.download-btn { border: 0; cursor: pointer; font: inherit; font-weight: 600; font-size: 14px; }
+.download-pop { position: absolute; right: 0; top: calc(100% + 8px); z-index: 20; width: 240px; display: grid; justify-items: center; gap: 10px; padding: 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); box-shadow: 0 10px 30px rgb(0 0 0 / .18); animation: rise 200ms ease-out both; }
+.download-pop p { font-size: 13px; color: var(--muted); text-align: center; }
+@media (max-width: 520px) { .download-pop { position: fixed; top: calc(env(safe-area-inset-top, 0px) + 72px); left: 0; right: 0; margin: 0 auto; width: min(260px, calc(100vw - 32px)); } }
+.download p { color: var(--muted); font-size: 14px; }
+.download-body { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+.download-body > div { display: grid; gap: 8px; flex: 1 1 220px; }
+.qr { border-radius: 10px; border: 1px solid var(--line); background: #fff; padding: 0; flex: none; }

@@ -2,6 +2,7 @@ import { ABOUT, APP_INFO, buildInfoRows, GLOSSARY } from "@kinh-dich/core";
 import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
 import { mobileBuildInfo } from "./buildInfo";
 import { Logo } from "./Logo";
+import { QrCode } from "./QrCode";
 import { colors } from "./theme";
 
 export function AboutScreen() {
@@ -41,6 +42,15 @@ export function AboutScreen() {
         </Text>
       ))}
       <Text style={styles.disclaimer}>{ABOUT.disclaimer}</Text>
+
+      <Text style={styles.h3}>Tải app điện thoại</Text>
+      <Text style={styles.muted}>Bản Android (file APK) mới nhất. Đưa mã QR này cho người khác quét để cài, hoặc bấm nút bên dưới.</Text>
+      <View style={styles.qrWrap}>
+        <QrCode value={APP_INFO.androidDownload} label="Mã QR tải app Android" />
+      </View>
+      <Pressable onPress={() => Linking.openURL(APP_INFO.androidDownload)} accessibilityRole="link" style={styles.downloadBtn}>
+        <Text style={styles.downloadText}>Tải app Android (APK)</Text>
+      </Pressable>
 
       <View style={styles.author} accessibilityLabel="Tác giả">
         <View style={styles.avatar}>
@@ -91,6 +101,9 @@ const styles = StyleSheet.create({
   avatarText: { color: "#fff", fontWeight: "700", fontSize: 18, fontFamily: "serif" },
   eyebrow: { fontSize: 11, letterSpacing: 1, color: colors.accent, fontWeight: "700" },
   link: { color: colors.accent, fontWeight: "700" },
+  qrWrap: { alignSelf: "flex-start", padding: 6, borderRadius: 10, borderWidth: 1, borderColor: colors.line, backgroundColor: "#ffffff" },
+  downloadBtn: { alignSelf: "flex-start", paddingVertical: 10, paddingHorizontal: 16, borderRadius: 999, backgroundColor: colors.accent },
+  downloadText: { color: "#fff", fontWeight: "700" },
   info: { padding: 14, borderRadius: 10, backgroundColor: colors.surface, gap: 6 },
   infoRow: { flexDirection: "row", gap: 12 },
   infoLabel: { width: 110 },

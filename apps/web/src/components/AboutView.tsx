@@ -1,6 +1,7 @@
 import { ABOUT, APP_INFO, buildInfoRows, GLOSSARY } from "@kinh-dich/core";
 import { webBuildInfo } from "../buildInfo";
 import { Logo } from "./Logo";
+import { QrCode } from "./QrCode";
 
 export function AboutView() {
   return (
@@ -45,6 +46,20 @@ export function AboutView() {
           ))}
         </ol>
         <p className="disclaimer">{ABOUT.disclaimer}</p>
+      </section>
+
+      <section className="download" aria-label="Tải app">
+        <h3>Tải app điện thoại</h3>
+        <div className="download-body">
+          <QrCode value={APP_INFO.androidDownload} label="Mã QR tải app Android" />
+          <div>
+            <p>Quét mã QR bằng camera điện thoại Android, hoặc bấm nút bên dưới để tải bản APK mới nhất.</p>
+            <p>Tải xong, mở file để cài; nếu máy hỏi, cho phép cài ứng dụng từ nguồn này.</p>
+            <a className="download-btn" href={APP_INFO.androidDownload} target="_blank" rel="noreferrer">
+              Tải app Android (APK)
+            </a>
+          </div>
+        </div>
       </section>
 
       <section className="author-card" aria-label="Tác giả">
