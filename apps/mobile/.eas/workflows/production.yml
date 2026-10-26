@@ -1,5 +1,6 @@
 # Chạy trên máy chủ Expo khi push/merge vào main.
-# Native không đổi → EAS Update kênh production. Native đổi → build Android production (AAB) mới.
+# Native không đổi → EAS Update kênh production. Native đổi → build APK mới (profile `apk`: cấu hình production, xuất .apk cài thẳng).
+# Khi cần nộp Google Play: đổi profile `apk` thành `production` (xuất .aab).
 # iOS: thêm các job tương tự (platform: ios) sau khi đã tạo chứng chỉ Apple một lần (xem docs/DEPLOY.md).
 # Nộp store tự động: thêm job `type: submit` với build_id của job build, sau khi cấu hình Google Play / App Store Connect.
 name: Production (main)
@@ -18,15 +19,15 @@ jobs:
     type: get-build
     params:
       fingerprint_hash: ${{ needs.fingerprint.outputs.android_fingerprint_hash }}
-      profile: production
+      profile: apk
   build_android:
-    name: Build Android (production)
+    name: Build Android (APK)
     needs: [get_android_build]
     if: ${{ !needs.get_android_build.outputs.build_id }}
     type: build
     params:
       platform: android
-      profile: production
+      profile: apk
   publish_android_update:
     name: Đẩy EAS Update (production)
     needs: [get_android_build]
