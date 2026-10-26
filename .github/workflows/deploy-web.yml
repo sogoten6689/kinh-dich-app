@@ -1,0 +1,46 @@
+name: Deploy web (Vercel)
+
+# Preview cho mỗi PR, production khi push lên main.
+# Cần secrets: VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID (xem docs/DEPLOY.md).
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-web-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - name: Kiểm tra secrets
+        id: check
+        run: |
+          if [ -z "$VERCEL_TOKEN" ] || [ -z "$VERCEL_ORG_ID" ] || [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "::notice::Chưa cấu hình secrets Vercel — bỏ qua deploy."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.check.outputs.skip != 'true'
+        uses: actions/checkout@v4
+      - if: steps.check.outputs.skip != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - if: steps.check.outputs.skip != 'true'
+        name: Deploy
+        run: |
+          ENVIRONMENT=preview; PROD_FLAG=""
+          if [ "${{ github.event_name }}" != "pull_request" ] && [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            ENVIRONMENT=production; PROD_FLAG="--prod"
+          fi
+          npx --yes vercel@latest pull --yes --environment=$ENVIRONMENT --token="$VERCEL_TOKEN"
+          npx --yes vercel@latest build $PROD_FLAG --token="$VERCEL_TOKEN"
+          URL=$(npx --yes vercel@latest deploy --prebuilt $PROD_FLAG --token="$VERCEL_TOKEN")
+          echo "### Web ($ENVIRONMENT): $URL" >> "$GITHUB_STEP_SUMMARY"

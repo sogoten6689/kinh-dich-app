@@ -1,0 +1,68 @@
+name: Deploy mobile (Expo EAS)
+
+# EAS Update (OTA): kênh "preview" cho PR, "production" khi push main.
+# Chạy tay (workflow_dispatch) với build=true để tạo bản cài Android/iOS qua EAS Build.
+# Cần secret EXPO_TOKEN và variable EAS_PROJECT_ID (xem docs/DEPLOY.md).
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      build:
+        description: "Chạy EAS Build (profile preview, Android APK)"
+        type: boolean
+        default: false
+      platform:
+        description: "Nền tảng cho EAS Build"
+        type: choice
+        options: [android, ios, all]
+        default: android
+
+concurrency:
+  group: deploy-mobile-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID }}
+      EXPO_OWNER: ${{ vars.EXPO_OWNER }}
+    steps:
+      - name: Kiểm tra cấu hình
+        id: check
+        run: |
+          if [ -z "$EXPO_TOKEN" ] || [ -z "$EAS_PROJECT_ID" ]; then
+            echo "::notice::Chưa cấu hình EXPO_TOKEN / EAS_PROJECT_ID — bỏ qua deploy."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.check.outputs.skip != 'true'
+        uses: actions/checkout@v4
+      - if: steps.check.outputs.skip != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - if: steps.check.outputs.skip != 'true'
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - if: steps.check.outputs.skip != 'true'
+        run: npm ci
+      - if: steps.check.outputs.skip != 'true'
+        name: EAS Update
+        working-directory: apps/mobile
+        env:
+          MESSAGE: ${{ github.event.head_commit.message || github.event.pull_request.title || 'manual' }}
+        run: |
+          CHANNEL=preview
+          if [ "${{ github.event_name }}" != "pull_request" ] && [ "${{ github.ref }}" = "refs/heads/main" ]; then CHANNEL=production; fi
+          eas update --channel "$CHANNEL" --message "$MESSAGE" --non-interactive
+          echo "### Mobile: EAS Update kênh $CHANNEL" >> "$GITHUB_STEP_SUMMARY"
+      - if: steps.check.outputs.skip != 'true' && github.event_name == 'workflow_dispatch' && inputs.build
+        name: EAS Build
+        working-directory: apps/mobile
+        run: eas build --profile preview --platform ${{ inputs.platform }} --non-interactive --no-wait
