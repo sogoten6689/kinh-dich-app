@@ -28,6 +28,8 @@ npm run bundle:check -w @kinh-dich/mobile   # bundle Android bằng Metro (kiể
 ## Quy tắc
 
 - **Logic Kinh Dịch chỉ đặt ở `packages/core`**, UI chỉ hiển thị. Tính năng mới: viết test trong `packages/core/test` trước.
+- **Web và mobile phải song song**: mọi tính năng làm trên cả hai app trong cùng một thay đổi, cùng hành vi và cùng nội dung chữ. Chữ hiển thị dùng chung (giải thích, thuật ngữ, mô tả phương pháp, giới thiệu, tác giả) đặt trong `packages/core/src/content.ts`, `glossary.ts`, `explain.ts` — không viết cứng riêng ở một app. Cột Web/Mobile trong `docs/SPEC.md` phải khớp nhau.
+- Logo gốc: `assets/brand/logo.svg`; sinh lại PNG bằng `node scripts/gen-icons.mjs` (cần Playwright).
 - Mỗi tính năng trong `docs/SPEC.md` có mã (vd. `F-CAST-01`); ghi mã đó trong tên `describe`/`it` của test tương ứng.
 - Hào luôn được đánh **từ dưới lên** (index 0 = hào sơ, 5 = hào thượng); khi vẽ thì đảo ngược (thượng ở trên).
 - Bit `1` = dương, `0` = âm. Giá trị gieo: 6 lão âm (động), 7 thiếu dương, 8 thiếu âm, 9 lão dương (động).

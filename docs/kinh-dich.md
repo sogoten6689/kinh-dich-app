@@ -52,6 +52,34 @@
 | 5 | Hào tĩnh duy nhất của quẻ biến |
 | 6 | Thoán từ quẻ biến (Càn: Dụng Cửu, Khôn: Dụng Lục) |
 
+## Vị trí hào
+
+| Hào | Vai trò |
+|---|---|
+| 1 (Sơ) | Khởi đầu, nền móng — việc còn ẩn |
+| 2 (Nhị) | Giữa nội quái, người thừa hành — trung, thường tốt |
+| 3 (Tam) | Cuối nội quái — chuyển tiếp, dễ gặp nguy |
+| 4 (Tứ) | Đầu ngoại quái, gần người lãnh đạo — cần dè dặt |
+| 5 (Ngũ) | Giữa ngoại quái, vị trí tôn quý — thường là hào chủ |
+| 6 (Thượng) | Cực điểm, kết thúc — vật cực tất phản |
+
+- **Đắc chính**: dương ở vị trí lẻ (1, 3, 5) hoặc âm ở vị trí chẵn (2, 4, 6). Ký Tế (63) là quẻ duy nhất cả 6 hào đắc chính.
+- **Đắc trung**: hào 2 và hào 5.
+- Quan hệ ngũ hành nội–ngoại: so hành nội quái với ngoại quái (Ngoại sinh nội, Nội sinh ngoại, Nội khắc ngoại, Ngoại khắc nội, cùng hành).
+
+## Bát quái — thông tin bổ sung (Thuyết Quái)
+
+| Quẻ | Tính | Con vật | Cơ thể | Tiên Thiên (phương) |
+|---|---|---|---|---|
+| Càn | Kiện (mạnh) | Ngựa | Đầu | Nam |
+| Đoài | Duyệt (vui) | Dê | Miệng | Đông Nam |
+| Ly | Lệ (sáng, bám) | Chim trĩ | Mắt | Đông |
+| Chấn | Động | Rồng | Chân | Đông Bắc |
+| Tốn | Nhập | Gà | Đùi | Tây Nam |
+| Khảm | Hãm (hiểm) | Lợn | Tai | Tây |
+| Cấn | Chỉ (dừng) | Chó | Tay | Tây Bắc |
+| Khôn | Thuận | Trâu | Bụng | Bắc |
+
 ## Tên hào
 
 Dương = Cửu, âm = Lục. Vị trí: Sơ, Nhị, Tam, Tứ, Ngũ, Thượng. Hào 1 và 6 đặt vị trí trước (*Sơ Cửu*, *Thượng Lục*), hào 2–5 đặt âm/dương trước (*Lục Nhị*, *Cửu Ngũ*).

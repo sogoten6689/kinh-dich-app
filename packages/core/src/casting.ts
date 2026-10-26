@@ -55,3 +55,25 @@ export function assertCastLines(values: readonly number[]): asserts values is Ca
     if (v !== 6 && v !== 7 && v !== 8 && v !== 9) throw new RangeError(`Giá trị hào phải là 6/7/8/9, nhận: ${v}`);
   }
 }
+
+export interface LineValueInfo {
+  value: LineValue;
+  name: string;
+  yang: boolean;
+  changing: boolean;
+  /** Ký hiệu truyền thống cho hào động: ○ (lão dương), × (lão âm). */
+  mark: "" | "○" | "×";
+  description: string;
+}
+
+const LINE_VALUE_INFO: Readonly<Record<LineValue, LineValueInfo>> = {
+  6: { value: 6, name: "Lão âm", yang: false, changing: true, mark: "×", description: "Âm đã đến cực, sẽ chuyển thành dương — hào động." },
+  7: { value: 7, name: "Thiếu dương", yang: true, changing: false, mark: "", description: "Dương còn non, giữ nguyên — hào tĩnh." },
+  8: { value: 8, name: "Thiếu âm", yang: false, changing: false, mark: "", description: "Âm còn non, giữ nguyên — hào tĩnh." },
+  9: { value: 9, name: "Lão dương", yang: true, changing: true, mark: "○", description: "Dương đã đến cực, sẽ chuyển thành âm — hào động." },
+};
+
+/** Tên và ý nghĩa của giá trị hào 6/7/8/9. */
+export function describeLineValue(v: LineValue): LineValueInfo {
+  return LINE_VALUE_INFO[v];
+}

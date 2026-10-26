@@ -12,6 +12,8 @@ export interface MeihuaResult {
   /** Quẻ Dụng: quẻ đơn chứa hào động — đại diện cho sự việc. */
   yong: Trigram;
   verdict: TiYongVerdict;
+  /** Số dư dùng để lập quẻ (dư 0 đã quy về 8 / 6) — để giải thích cho người dùng. */
+  steps: { upperRemainder: number; lowerRemainder: number; movingRemainder: number } | null;
 }
 
 export interface TiYongVerdict {
@@ -32,7 +34,10 @@ export function castByNumbers(a: number, b: number): MeihuaResult {
   const upper = trigramFromNumber(a);
   const lower = trigramFromNumber(b);
   const movingLine = ((((a + b) % 6) || 6) as LinePosition);
-  return fromTrigrams(upper, lower, movingLine);
+  return {
+    ...fromTrigrams(upper, lower, movingLine),
+    steps: { upperRemainder: upper.earlyHeavenNumber, lowerRemainder: lower.earlyHeavenNumber, movingRemainder: movingLine },
+  };
 }
 
 export function fromTrigrams(upper: Trigram, lower: Trigram, movingLine: LinePosition): MeihuaResult {
@@ -45,7 +50,7 @@ export function fromTrigrams(upper: Trigram, lower: Trigram, movingLine: LinePos
   const reading = buildReading(cast);
   const yong = movingLine <= 3 ? lower : upper;
   const ti = movingLine <= 3 ? upper : lower;
-  return { reading, movingLine, ti, yong, verdict: judgeTiYong(ti, yong) };
+  return { reading, movingLine, ti, yong, verdict: judgeTiYong(ti, yong), steps: null };
 }
 
 /** Luận sinh khắc Thể – Dụng theo ngũ hành. */
