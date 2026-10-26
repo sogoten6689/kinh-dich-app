@@ -16,7 +16,8 @@
     "verify": "npm run typecheck && npm run test",
     "eas:build:android:dev": "cd apps/mobile && eas build --platform android --profile development",
     "eas:build:ios:dev": "cd apps/mobile && eas build --platform ios --profile development",
-    "eas:build:android:preview": "cd apps/mobile && eas build --platform android --profile preview"
+    "eas:build:android:preview": "cd apps/mobile && eas build --platform android --profile preview",
+    "eas:build:android:apk": "cd apps/mobile && eas build --platform android --profile apk"
   },
   "engines": {
     "node": ">=20"

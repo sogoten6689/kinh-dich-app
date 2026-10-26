@@ -31,6 +31,13 @@ Deploy tay từ máy: `npx vercel` (preview) / `npx vercel --prod`.
 ## Mobile — Expo EAS (build trên máy chủ Expo)
 
 Project EAS: `c946102a-7cad-4886-9743-b9c29f7048cb` (đã có trong `apps/mobile/app.config.ts`).
+Project trên expo.dev là **`@sogoten6689/kinh-dich-app`**, nên `app.config.ts` đặt `slug: "kinh-dich-app"` và `owner: "sogoten6689"`. Nếu đổi project, phải đổi cả hai cho khớp, nếu không build sẽ dừng ở bước đọc cấu hình.
+
+**Build APK (cài thẳng lên Android):**
+```bash
+npm run eas:build:android:apk      # từ gốc repo; tương đương `cd apps/mobile && eas build -p android --profile apk`
+```
+Profile `apk` = cấu hình `production` (kênh update `production`) nhưng xuất `.apk` và phân phối nội bộ (link tải). Workflow `production.yml` trên `main` cũng build profile này.
 
 ### 1. Kết nối (làm một lần)
 
@@ -59,7 +66,7 @@ Project EAS: `c946102a-7cad-4886-9743-b9c29f7048cb` (đã có trong `apps/mobile
 | File | Khi nào chạy | Làm gì |
 |---|---|---|
 | `preview.yml` | Mở/cập nhật PR vào `main` | Tính fingerprint. Native không đổi → EAS Update kênh `preview`. Native đổi → build APK `preview` mới |
-| `production.yml` | Push/merge vào `main` | Như trên với profile `production` (AAB) và kênh `production` |
+| `production.yml` | Push/merge vào `main` | Như trên với profile `apk` (APK cấu hình production) và kênh `production` |
 | `build-all.yml` | Chạy tay | Build `preview` cho Android và iOS |
 
 Chạy tay: expo.dev → project → *Workflows* → chọn workflow → *Run*, hoặc

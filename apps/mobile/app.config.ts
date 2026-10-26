@@ -6,8 +6,9 @@ const projectId = process.env.EAS_PROJECT_ID || DEFAULT_EAS_PROJECT_ID;
 
 const config: ExpoConfig = {
   name: "Kinh Dịch",
-  slug: "kinh-dich",
-  ...(process.env.EXPO_OWNER ? { owner: process.env.EXPO_OWNER } : {}),
+  // Phải khớp project trên expo.dev: @sogoten6689/kinh-dich-app (id ở trên), nếu không EAS dừng build khi đọc cấu hình.
+  slug: "kinh-dich-app",
+  owner: process.env.EXPO_OWNER || "sogoten6689",
   version: "0.2.0",
   orientation: "portrait",
   userInterfaceStyle: "light",
