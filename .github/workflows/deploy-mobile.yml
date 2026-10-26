@@ -1,12 +1,9 @@
 name: Deploy mobile (Expo EAS)
 
-# EAS Update (OTA): kênh "preview" cho PR, "production" khi push main.
-# Chạy tay (workflow_dispatch) với build=true để tạo bản cài Android/iOS qua EAS Build.
-# Cần secret EXPO_TOKEN; projectId đã có trong app.config.ts (xem docs/DEPLOY.md).
+# Đường dự phòng, chỉ chạy tay. Build/Update tự động đã chuyển sang EAS Workflows
+# chạy trên máy chủ Expo (apps/mobile/.eas/workflows/, xem docs/DEPLOY.md).
+# Cần secret EXPO_TOKEN; projectId đã có trong app.config.ts.
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
     inputs:
       build:

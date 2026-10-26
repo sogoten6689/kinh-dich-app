@@ -19,7 +19,8 @@ const config: ExpoConfig = {
     adaptiveIcon: { foregroundImage: "./assets/adaptive-icon.png", backgroundColor: "#a3361f" },
   },
   web: { favicon: "./assets/favicon.png" },
-  runtimeVersion: { policy: "appVersion" },
+  // Fingerprint: runtime tự đổi khi phần native đổi, nên EAS Update không bao giờ gửi JS lên bản cài không tương thích.
+  runtimeVersion: { policy: "fingerprint" },
   ...(projectId ? { updates: { url: `https://u.expo.dev/${projectId}` }, extra: { eas: { projectId } } } : {}),
 };
 
