@@ -1,61 +1,244 @@
-import { buildReading, castByCoins, castByNumbers, castByYarrow, type MeihuaResult, type Reading } from "@kinh-dich/core";
-import { useState, type FormEvent } from "react";
+import {
+  buildReading,
+  CAST_METHODS,
+  castByNumbers,
+  castByYarrow,
+  describeLineValue,
+  LINE_NAMES,
+  tossCoins,
+  type CastLines,
+  type CastMethod,
+  type CoinToss,
+  type LinePosition,
+  type LineValue,
+  type MeihuaResult,
+} from "@kinh-dich/core";
+import { useMemo, useState, type FormEvent } from "react";
+import { Coin } from "./Coin";
 import { ReadingView } from "./ReadingView";
+import { Term } from "./Term";
 
-type Method = "coins" | "yarrow" | "numbers";
+type Method = CastMethod;
+const howTo = (m: Method) => CAST_METHODS.find((x) => x.id === m)!.howTo;
 
 export function CastPanel() {
   const [method, setMethod] = useState<Method>("coins");
-  const [reading, setReading] = useState<Reading | null>(null);
+  const [question, setQuestion] = useState("");
+  const [tosses, setTosses] = useState<CoinToss[]>([]);
+  const [values, setValues] = useState<LineValue[]>([]);
   const [meihua, setMeihua] = useState<MeihuaResult | null>(null);
   const [a, setA] = useState("");
   const [b, setB] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  function cast(e?: FormEvent) {
-    e?.preventDefault();
-    setError(null);
+  const reading = useMemo(() => (values.length === 6 ? buildReading(values as unknown as CastLines) : null), [values]);
+
+  function reset(next: Method = method) {
+    setMethod(next);
+    setTosses([]);
+    setValues([]);
     setMeihua(null);
-    if (method === "coins") setReading(buildReading(castByCoins().lines));
-    else if (method === "yarrow") setReading(buildReading(castByYarrow()));
-    else {
-      try {
-        const r = castByNumbers(Number(a), Number(b));
-        setMeihua(r);
-        setReading(r.reading);
-      } catch (err) {
-        setReading(null);
-        setError(err instanceof Error ? err.message : String(err));
-      }
+    setError(null);
+  }
+
+  function tossOne() {
+    if (values.length >= 6) return;
+    const t = tossCoins();
+    setTosses((prev) => [...prev, t]);
+    setValues((prev) => [...prev, t.value]);
+  }
+
+  function tossAll() {
+    const remaining = Array.from({ length: 6 - values.length }, () => tossCoins());
+    setTosses((prev) => [...prev, ...remaining]);
+    setValues((prev) => [...prev, ...remaining.map((t) => t.value)]);
+  }
+
+  function castYarrow() {
+    setValues([...castByYarrow()]);
+  }
+
+  function castNumbers(e: FormEvent) {
+    e.preventDefault();
+    try {
+      const r = castByNumbers(Number(a), Number(b));
+      setError(null);
+      setMeihua(r);
+      setValues([...r.reading.cast]);
+    } catch (err) {
+      setMeihua(null);
+      setValues([]);
+      setError(`${err instanceof Error ? err.message : String(err)}. Hãy nhập hai số nguyên dương, ví dụ 5 và 3.`);
     }
   }
 
+  const lastToss = tosses[tosses.length - 1];
+
   return (
     <div className="cast-panel">
-      <form onSubmit={cast}>
-        <label>
-          Phương pháp{" "}
-          <select value={method} onChange={(e) => setMethod(e.target.value as Method)}>
-            <option value="coins">Gieo 3 đồng xu</option>
-            <option value="yarrow">Cỏ thi (mô phỏng)</option>
-            <option value="numbers">Mai Hoa — theo hai số</option>
-          </select>
+      <section className="cast-setup" aria-label="Chuẩn bị gieo quẻ">
+        <label className="question-input" htmlFor="question">
+          <span>Điều bạn muốn hỏi (không bắt buộc)</span>
+          <input id="question" value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Ví dụ: Tôi có nên đổi việc trong năm nay?" />
         </label>
-        {method === "numbers" && (
-          <div className="numbers">
-            <input aria-label="Số thứ nhất" inputMode="numeric" value={a} onChange={(e) => setA(e.target.value)} placeholder="Số 1" />
-            <input aria-label="Số thứ hai" inputMode="numeric" value={b} onChange={(e) => setB(e.target.value)} placeholder="Số 2" />
+
+        <div className="methods" role="radiogroup" aria-label="Phương pháp gieo quẻ">
+          {CAST_METHODS.map((m) => (
+            <button
+              key={m.id}
+              type="button"
+              role="radio"
+              aria-checked={method === m.id}
+              className={`method ${method === m.id ? "active" : ""}`}
+              onClick={() => reset(m.id)}
+            >
+              <strong>{m.name}</strong>
+              <span>{m.hint}</span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {method === "coins" && (
+        <section className="table" aria-label="Bàn gieo đồng xu">
+          <div className="table-stage">
+            <div className="coins" key={tosses.length} aria-live="polite">
+              {lastToss ? (
+                lastToss.coins.map((h, i) => <Coin key={i} heads={h} delay={i * 90} />)
+              ) : (
+                <>
+                  <Coin heads delay={0} />
+                  <Coin heads={false} delay={0} />
+                  <Coin heads delay={0} />
+                </>
+              )}
+            </div>
+            <p className="stage-note">
+              {lastToss
+                ? `Hào ${tosses.length}: ${lastToss.coins.map((h) => (h ? 3 : 2)).join(" + ")} = ${lastToss.value} → ${describeLineValue(lastToss.value).name}`
+                : howTo("coins")}
+            </p>
+            <div className="actions">
+              <button type="button" className="primary" onClick={tossOne} disabled={values.length >= 6}>
+                {values.length >= 6 ? "Đã đủ 6 hào" : `Gieo hào ${values.length + 1}`}
+              </button>
+              <button type="button" onClick={tossAll} disabled={values.length >= 6}>
+                Gieo nhanh {values.length === 0 ? "cả 6 hào" : "các hào còn lại"}
+              </button>
+              {values.length > 0 && (
+                <button type="button" className="ghost" onClick={() => reset()}>
+                  Gieo lại
+                </button>
+              )}
+            </div>
           </div>
-        )}
-        <button type="submit">Lập quẻ</button>
-      </form>
-      {error && <p role="alert">{error}</p>}
-      {meihua && (
-        <p className="meihua">
-          Thể: {meihua.ti.name} · Dụng: {meihua.yong.name} — <strong>{meihua.verdict.label}</strong>. {meihua.verdict.explanation}
-        </p>
+          <LineBuilder values={values} tosses={tosses} />
+        </section>
       )}
-      {reading && <ReadingView reading={reading} />}
+
+      {method === "yarrow" && (
+        <section className="table" aria-label="Gieo cỏ thi">
+          <div className="table-stage">
+            <p className="stage-note">{howTo("yarrow")}</p>
+            <div className="actions">
+              <button type="button" className="primary" onClick={castYarrow}>
+                {values.length ? "Gieo lại" : "Gieo cỏ thi"}
+              </button>
+            </div>
+          </div>
+          <LineBuilder values={values} />
+        </section>
+      )}
+
+      {method === "numbers" && (
+        <section className="table" aria-label="Mai Hoa Dịch Số">
+          <form className="numbers" onSubmit={castNumbers}>
+            <label htmlFor="num-a">
+              Số thứ nhất
+              <input id="num-a" inputMode="numeric" value={a} onChange={(e) => setA(e.target.value)} placeholder="vd. 5" />
+            </label>
+            <label htmlFor="num-b">
+              Số thứ hai
+              <input id="num-b" inputMode="numeric" value={b} onChange={(e) => setB(e.target.value)} placeholder="vd. 3" />
+            </label>
+            <button type="submit" className="primary">
+              Lập quẻ
+            </button>
+          </form>
+          {error && (
+            <p role="alert" className="error">
+              {error}
+            </p>
+          )}
+          {meihua?.steps && (
+            <ol className="steps" aria-label="Các bước tính">
+              <li>
+                <span className="step-calc">{a} ÷ 8 dư {meihua.steps.upperRemainder % 8}</span>
+                <span>
+                  → số {meihua.steps.upperRemainder} là <strong>{meihua.reading.primary.upper.symbol} {meihua.reading.primary.upper.name}</strong>: thượng quái
+                </span>
+              </li>
+              <li>
+                <span className="step-calc">{b} ÷ 8 dư {meihua.steps.lowerRemainder % 8}</span>
+                <span>
+                  → số {meihua.steps.lowerRemainder} là <strong>{meihua.reading.primary.lower.symbol} {meihua.reading.primary.lower.name}</strong>: hạ quái
+                </span>
+              </li>
+              <li>
+                <span className="step-calc">
+                  ({a} + {b}) ÷ 6 dư {meihua.steps.movingRemainder % 6}
+                </span>
+                <span>
+                  → <strong>hào {meihua.movingLine}</strong> động
+                </span>
+              </li>
+            </ol>
+          )}
+          <p className="stage-note">{howTo("numbers")}</p>
+        </section>
+      )}
+
+      {reading && <ReadingView reading={reading} question={question.trim() || undefined} meihua={meihua} />}
     </div>
+  );
+}
+
+/** Quẻ đang dựng: hào hiện dần từ dưới lên, kèm giải thích giá trị từng hào. */
+function LineBuilder({ values, tosses }: { values: readonly LineValue[]; tosses?: readonly CoinToss[] }) {
+  const slots = [6, 5, 4, 3, 2, 1] as const;
+  return (
+    <ol className="builder" aria-label="Các hào đã gieo" reversed>
+      {slots.map((pos) => {
+        const v = values[pos - 1];
+        const t = tosses?.[pos - 1];
+        if (v === undefined) {
+          return (
+            <li key={pos} className="slot empty">
+              <span className="slot-name">Hào {pos}</span>
+              <span className="slot-line" />
+              <span className="slot-info">{LINE_NAMES[pos as LinePosition]}</span>
+            </li>
+          );
+        }
+        const info = describeLineValue(v);
+        return (
+          <li key={pos} className={`slot ${info.yang ? "yang" : "yin"} ${info.changing ? "changing" : ""}`}>
+            <span className="slot-name">Hào {pos}</span>
+            <span className="slot-line">
+              <span />
+              {!info.yang && <span />}
+              {info.mark && <em>{info.mark}</em>}
+            </span>
+            <span className="slot-info">
+              <strong>
+                {v} · {info.name}
+              </strong>
+              {t && <small>{t.coins.map((h) => (h ? "ngửa" : "sấp")).join(", ")}</small>}
+              <small>{info.changing ? <Term k="hao-dong">sẽ đổi</Term> : "giữ nguyên"}</small>
+            </span>
+          </li>
+        );
+      })}
+    </ol>
   );
 }

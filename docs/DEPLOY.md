@@ -14,7 +14,9 @@ Cả hai workflow **tự bỏ qua** (chỉ in notice) khi chưa có secrets, nê
 
 **Cách A (đơn giản nhất): Vercel Git Integration**
 1. vercel.com → *Add New Project* → import repo `kinh-dich-app`.
-2. Root Directory: để trống (gốc repo). `vercel.json` đã đặt install/build/output (`apps/web/dist`).
+2. Root Directory: để trống (gốc repo, dùng `vercel.json` ở gốc) **hoặc** `apps/web` (dùng `apps/web/vercel.json`).
+   Cả hai file đã đặt install/build/output và ghi đè cài đặt trên dashboard — không cần chỉnh Build/Output Directory trong Project Settings.
+   Nếu gặp `STATIC_BUILD_NO_OUT_DIR`: kiểm tra Root Directory là một trong hai giá trị trên.
 3. Deploy. Khi dùng cách này thì không cần secrets cho `deploy-web.yml` (workflow sẽ tự bỏ qua).
 
 **Cách B: deploy qua GitHub Actions**
@@ -28,18 +30,15 @@ Deploy tay từ máy: `npx vercel` (preview) / `npx vercel --prod`.
 
 ## Mobile — Expo EAS
 
-1. Tạo tài khoản expo.dev, rồi ở `apps/mobile`:
-   ```bash
-   npx eas-cli login
-   npx eas-cli init          # tạo project, in ra projectId
-   ```
+1. Project EAS đã liên kết: projectId `c946102a-7cad-4886-9743-b9c29f7048cb` nằm trong `apps/mobile/app.config.ts`
+   (tương đương `eas init --id …`). Muốn dùng project khác thì đặt biến `EAS_PROJECT_ID`.
 2. GitHub → Settings → Secrets and variables → Actions:
    - Secret `EXPO_TOKEN` (expo.dev → Account settings → Access tokens).
-   - Variable `EAS_PROJECT_ID` = projectId ở bước 1.
+   - (Tùy chọn) Variable `EAS_PROJECT_ID` để ghi đè projectId mặc định.
    - Variable `EXPO_OWNER` = username/organization Expo (nếu project thuộc organization).
 3. Bản cài đặt đầu tiên (OTA chỉ áp dụng cho app đã cài có cùng `runtimeVersion`):
    - Actions → *Deploy mobile (Expo EAS)* → *Run workflow* → `build = true`, chọn nền tảng.
-   - Hoặc từ máy: `EAS_PROJECT_ID=<id> npx eas-cli build --profile preview --platform android`.
+   - Hoặc từ máy: `npx eas-cli login && npx eas-cli build --profile preview --platform android`.
    - iOS cần tài khoản Apple Developer; EAS sẽ hỏi credentials ở lần build đầu (chạy tay từ máy).
 4. Sau đó mỗi PR / push `main` sẽ đẩy EAS Update lên kênh tương ứng.
 5. Lên store: `npx eas-cli build --profile production` rồi `npx eas-cli submit`.

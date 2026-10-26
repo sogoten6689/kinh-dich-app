@@ -2,7 +2,7 @@ name: Deploy mobile (Expo EAS)
 
 # EAS Update (OTA): kênh "preview" cho PR, "production" khi push main.
 # Chạy tay (workflow_dispatch) với build=true để tạo bản cài Android/iOS qua EAS Build.
-# Cần secret EXPO_TOKEN và variable EAS_PROJECT_ID (xem docs/DEPLOY.md).
+# Cần secret EXPO_TOKEN; projectId đã có trong app.config.ts (xem docs/DEPLOY.md).
 on:
   push:
     branches: [main]
@@ -34,8 +34,8 @@ jobs:
       - name: Kiểm tra cấu hình
         id: check
         run: |
-          if [ -z "$EXPO_TOKEN" ] || [ -z "$EAS_PROJECT_ID" ]; then
-            echo "::notice::Chưa cấu hình EXPO_TOKEN / EAS_PROJECT_ID — bỏ qua deploy."
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "::notice::Chưa cấu hình secret EXPO_TOKEN — bỏ qua deploy."
             echo "skip=true" >> "$GITHUB_OUTPUT"
           fi
       - if: steps.check.outputs.skip != 'true'
