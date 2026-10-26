@@ -1,4 +1,5 @@
-import { ABOUT, APP_INFO, GLOSSARY } from "@kinh-dich/core";
+import { ABOUT, APP_INFO, buildInfoRows, GLOSSARY } from "@kinh-dich/core";
+import { webBuildInfo } from "../buildInfo";
 import { Logo } from "./Logo";
 
 export function AboutView() {
@@ -9,6 +10,12 @@ export function AboutView() {
         <div>
           <h2>{APP_INFO.name}</h2>
           <p>{ABOUT.intro}</p>
+          <p className="website">
+            Trang chính thức:{" "}
+            <a href={APP_INFO.website} target="_blank" rel="noreferrer">
+              {APP_INFO.website.replace("https://", "")}
+            </a>
+          </p>
         </div>
       </section>
 
@@ -50,6 +57,18 @@ export function AboutView() {
           <p>{APP_INFO.organization}</p>
         </div>
         <p className="version">Phiên bản {APP_INFO.version}</p>
+      </section>
+
+      <section className="build-info" aria-label="Thông tin bản đang chạy">
+        <h3>Thông tin bản đang chạy</h3>
+        <dl>
+          {buildInfoRows(webBuildInfo()).map((r) => (
+            <div key={r.label}>
+              <dt>{r.label}</dt>
+              <dd>{r.value}</dd>
+            </div>
+          ))}
+        </dl>
       </section>
 
       <section>

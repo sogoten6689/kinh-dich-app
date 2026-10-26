@@ -343,3 +343,11 @@ button.hexagram:hover { background: var(--card); border-color: var(--line); }
 .topic-mini.topic-fortune { --c: var(--fortune); }
 .topic-mini strong { color: var(--c); }
 .topic-mini p { font-size: 14px; }
+
+/* Thông tin bản đang chạy */
+.website { font-size: 14px; }
+.website a { color: var(--accent); font-weight: 600; }
+.build-info dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 0; padding: 14px 16px; border-radius: 10px; background: var(--surface); font-size: 14px; }
+.build-info dl div { display: contents; }
+.build-info dt { color: var(--muted); }
+.build-info dd { margin: 0; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
