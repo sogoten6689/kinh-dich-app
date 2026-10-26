@@ -1,4 +1,4 @@
-import type { Element } from "@kinh-dich/core";
+import type { Element, Luck, SubjectTopic } from "@kinh-dich/core";
 
 /** Bảng màu giống web (apps/web/src/styles.css, giao diện sáng). */
 export const colors = {
@@ -24,6 +24,19 @@ export const ELEMENT_COLOR: Readonly<Record<Element, string>> = {
   thuy: "#2f5f8a",
   hoa: "#c0432a",
   tho: "#9a6b2f",
+};
+
+/** Màu chủ đề, giống --love / --career / --fortune trên web. */
+export const TOPIC_COLOR: Readonly<Record<SubjectTopic, string>> = {
+  love: "#b23a5a",
+  career: "#2f5f8a",
+  fortune: "#8a6a1f",
+};
+
+export const LUCK_COLOR: Readonly<Record<Luck, { bg: string; fg: string }>> = {
+  cat: { bg: colors.goodSoft, fg: colors.good },
+  binh: { bg: colors.warnSoft, fg: colors.fg },
+  hung: { bg: colors.badSoft, fg: colors.bad },
 };
 
 export const fonts = {

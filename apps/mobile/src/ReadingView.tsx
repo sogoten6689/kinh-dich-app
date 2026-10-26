@@ -1,8 +1,9 @@
-import { explainReading, lineLabel, type ExplanationKey, type MeihuaResult, type Reading } from "@kinh-dich/core";
+import { explainReading, lineLabel, type ExplanationKey, type MeihuaResult, type Reading, type Topic } from "@kinh-dich/core";
 import { StyleSheet, Text, View } from "react-native";
 import { HexagramFigure } from "./HexagramFigure";
 import { Term } from "./Term";
 import { colors } from "./theme";
+import { TopicCard } from "./TopicCard";
 import { WuxingCycle } from "./WuxingCycle";
 
 const SECTION_TERM: Partial<Record<ExplanationKey, string>> = {
@@ -15,7 +16,7 @@ const SECTION_TERM: Partial<Record<ExplanationKey, string>> = {
   guide: "thoan-tu",
 };
 
-export function ReadingView({ reading, question, meihua }: { reading: Reading; question?: string; meihua?: MeihuaResult | null }) {
+export function ReadingView({ reading, question, meihua, topic = "general" }: { reading: Reading; question?: string; meihua?: MeihuaResult | null; topic?: Topic }) {
   const { primary, transformed, nuclear, changingLines, cast } = reading;
   const sections = explainReading(reading);
   return (
@@ -67,6 +68,9 @@ export function ReadingView({ reading, question, meihua }: { reading: Reading; q
         </View>
       ) : null}
 
+      {topic !== "general" && <TopicCard reading={reading} topic={topic} meihua={meihua} />}
+      {topic !== "general" && <Text style={styles.explainHeading}>Giải thích chung</Text>}
+
       {sections.map((s) => (
         <View key={s.key} style={[styles.section, s.key === "guide" && styles.guide]}>
           {SECTION_TERM[s.key] ? <Term k={SECTION_TERM[s.key]!} label={s.title} style={styles.h3} /> : <Text style={styles.h3}>{s.title}</Text>}
@@ -96,4 +100,5 @@ const styles = StyleSheet.create({
   h3: { fontSize: 16, fontWeight: "700", fontFamily: "serif", color: colors.fg },
   body: { fontSize: 14.5, lineHeight: 21, color: colors.fg },
   bold: { fontWeight: "700" },
+  explainHeading: { fontSize: 15, fontWeight: "700", color: colors.muted, fontFamily: "serif" },
 });

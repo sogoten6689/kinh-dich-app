@@ -19,6 +19,9 @@
   --el-thuy: #2f5f8a;
   --el-hoa: #c0432a;
   --el-tho: #9a6b2f;
+  --love: #b23a5a;
+  --career: #2f5f8a;
+  --fortune: #8a6a1f;
   --font-display: "Noto Serif", Georgia, "Times New Roman", serif;
   --font-body: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --radius: 12px;
@@ -47,6 +50,9 @@
     --el-thuy: #79aee0;
     --el-hoa: #ee7f62;
     --el-tho: #d19b5a;
+    --love: #ee8aa3;
+    --career: #79aee0;
+    --fortune: #e2b55a;
     color-scheme: dark;
   }
 }
@@ -300,3 +306,40 @@ button.hexagram:hover { background: var(--card); border-color: var(--line); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; animation-delay: 0ms !important; transition: none !important; }
 }
+
+/* Chủ đề: tình duyên, công việc, vận mệnh */
+.topics { display: flex; flex-wrap: wrap; gap: 8px; }
+.topic-chip { --c: var(--accent); border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 8px 16px; font-weight: 500; }
+.topic-chip.topic-love { --c: var(--love); }
+.topic-chip.topic-career { --c: var(--career); }
+.topic-chip.topic-fortune { --c: var(--fortune); }
+.topic-chip.active { border-color: var(--c); color: var(--c); box-shadow: inset 0 0 0 1px var(--c); background: var(--surface); font-weight: 600; }
+.topic-card { --c: var(--accent); display: grid; gap: 14px; padding: 18px; border-radius: var(--radius); border: 1px solid var(--line); border-left: 5px solid var(--c); background: var(--surface); animation: rise 450ms ease-out both; }
+.topic-card.topic-love { --c: var(--love); }
+.topic-card.topic-career { --c: var(--career); }
+.topic-card.topic-fortune { --c: var(--fortune); }
+.topic-card header { display: grid; gap: 6px; }
+.topic-card h3 { font-size: 1.3rem; color: var(--c); }
+.topic-card dl { margin: 0; display: grid; gap: 10px; }
+.topic-card dl div { display: grid; gap: 2px; }
+.topic-card dt { font-weight: 600; font-size: 14px; }
+.topic-card dd { margin: 0; font-size: 14.5px; }
+.topic-card .topic-advice { padding: 10px 12px; border-radius: 8px; background: var(--card); }
+.luck-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.luck { display: inline-grid; justify-items: center; padding: 4px 12px; border-radius: 10px; font-weight: 700; font-size: 14px; line-height: 1.2; vertical-align: middle; }
+.luck small { font-weight: 500; font-size: 11px; opacity: .8; }
+.luck-cat { background: var(--good-soft); color: var(--good); }
+.luck-binh { background: var(--warn-soft); color: var(--fg); }
+.luck-hung { background: var(--bad-soft); color: var(--bad); }
+.luck-arrow { color: var(--muted); font-size: 18px; }
+.trend { font-size: 13px; padding: 4px 10px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); }
+.trend-up { color: var(--good); border-color: var(--good); }
+.trend-down { color: var(--bad); border-color: var(--bad); }
+.explain-heading { font-size: 1rem; color: var(--muted); }
+.topic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.topic-mini { --c: var(--accent); padding: 12px 14px; border-radius: 10px; background: var(--surface); border-top: 3px solid var(--c); display: grid; gap: 4px; }
+.topic-mini.topic-love { --c: var(--love); }
+.topic-mini.topic-career { --c: var(--career); }
+.topic-mini.topic-fortune { --c: var(--fortune); }
+.topic-mini strong { color: var(--c); }
+.topic-mini p { font-size: 14px; }

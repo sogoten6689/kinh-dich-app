@@ -6,12 +6,14 @@ import {
   describeLineValue,
   LINE_NAMES,
   tossCoins,
+  TOPICS,
   type CastLines,
   type CastMethod,
   type CoinToss,
   type LinePosition,
   type LineValue,
   type MeihuaResult,
+  type Topic,
 } from "@kinh-dich/core";
 import { useMemo, useState, type FormEvent } from "react";
 import { Coin } from "./Coin";
@@ -24,6 +26,7 @@ const howTo = (m: Method) => CAST_METHODS.find((x) => x.id === m)!.howTo;
 export function CastPanel() {
   const [method, setMethod] = useState<Method>("coins");
   const [question, setQuestion] = useState("");
+  const [topic, setTopic] = useState<Topic>("general");
   const [tosses, setTosses] = useState<CoinToss[]>([]);
   const [values, setValues] = useState<LineValue[]>([]);
   const [meihua, setMeihua] = useState<MeihuaResult | null>(null);
@@ -81,6 +84,22 @@ export function CastPanel() {
           <span>Điều bạn muốn hỏi (không bắt buộc)</span>
           <input id="question" value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Ví dụ: Tôi có nên đổi việc trong năm nay?" />
         </label>
+
+        <div className="topics" role="radiogroup" aria-label="Chủ đề muốn xem">
+          {TOPICS.map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              role="radio"
+              aria-checked={topic === t.id}
+              title={t.hint}
+              className={`topic-chip topic-${t.id} ${topic === t.id ? "active" : ""}`}
+              onClick={() => setTopic(t.id)}
+            >
+              {t.name}
+            </button>
+          ))}
+        </div>
 
         <div className="methods" role="radiogroup" aria-label="Phương pháp gieo quẻ">
           {CAST_METHODS.map((m) => (
@@ -198,7 +217,7 @@ export function CastPanel() {
         </section>
       )}
 
-      {reading && <ReadingView reading={reading} question={question.trim() || undefined} meihua={meihua} />}
+      {reading && <ReadingView reading={reading} question={question.trim() || undefined} meihua={meihua} topic={topic} />}
     </div>
   );
 }

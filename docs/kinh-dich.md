@@ -80,6 +80,13 @@
 | Cấn | Chỉ (dừng) | Chó | Tay | Tây Bắc |
 | Khôn | Thuận | Trâu | Bụng | Bắc |
 
+## Xem theo chủ đề
+
+- Mỗi quẻ có một mức chung **Cát / Bình / Hung** theo cách hiểu truyền thống (ví dụ Thái, Khiêm cát; Bĩ, Khảm, Kiển, Khốn hung) và một câu luận cho Tình duyên, Công việc, Vận mệnh (`packages/core/src/topics.ts`).
+- Xu hướng = so mức của quẻ biến với quẻ chủ (Hung < Bình < Cát): cao hơn → tốt lên, thấp hơn → xấu đi, bằng → giữ nhịp, không có quẻ biến → đứng yên.
+- Nội quái ứng với phía người hỏi, ngoại quái ứng với phía bên ngoài: Tình duyên (bạn ↔ người ấy, gia đình hai bên), Công việc (bạn, nội bộ ↔ cấp trên, đối tác, thị trường), Vận mệnh (nội tâm, sức khỏe ↔ hoàn cảnh, thời thế).
+- Mai Hoa: Thể là người hỏi, Dụng là người ấy / công việc / sự việc tùy chủ đề.
+
 ## Tên hào
 
 Dương = Cửu, âm = Lục. Vị trí: Sơ, Nhị, Tam, Tứ, Ngũ, Thượng. Hào 1 và 6 đặt vị trí trước (*Sơ Cửu*, *Thượng Lục*), hào 2–5 đặt âm/dương trước (*Lục Nhị*, *Cửu Ngũ*).

@@ -1,11 +1,13 @@
-import { ELEMENT_NAMES, explainHexagram, invertedHexagram, nuclearHexagram, oppositeHexagram, type Hexagram } from "@kinh-dich/core";
+import { ELEMENT_NAMES, explainHexagram, hexagramTopics, invertedHexagram, nuclearHexagram, oppositeHexagram, TOPICS, type Hexagram } from "@kinh-dich/core";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { HexagramFigure } from "./HexagramFigure";
 import { Term } from "./Term";
-import { colors, ELEMENT_COLOR } from "./theme";
+import { colors, ELEMENT_COLOR, TOPIC_COLOR } from "./theme";
+import { LuckBadge } from "./TopicCard";
 
 export function HexagramDetail({ hexagram: h, onSelect, onClose }: { hexagram: Hexagram; onSelect: (n: number) => void; onClose: () => void }) {
   const e = explainHexagram(h);
+  const topics = hexagramTopics(h);
   const related = [
     { label: "Hỗ quái", term: "ho-quai", h: nuclearHexagram(h) },
     { label: "Thác quái", term: "thac-quai", h: oppositeHexagram(h) },
@@ -66,6 +68,20 @@ export function HexagramDetail({ hexagram: h, onSelect, onClose }: { hexagram: H
         </View>
       ))}
 
+      <View style={styles.inlineCenter}>
+        <Text style={styles.h3}>Theo chủ đề</Text>
+        <LuckBadge luck={topics.luck} />
+      </View>
+      {TOPICS.filter((t) => t.id !== "general").map((t) => {
+        const id = t.id as "love" | "career" | "fortune";
+        return (
+          <View key={t.id} style={[styles.topicMini, { borderTopColor: TOPIC_COLOR[id] }]}>
+            <Text style={[styles.bold, { color: TOPIC_COLOR[id] }]}>{t.name}</Text>
+            <Text style={styles.body}>{topics[id]}</Text>
+          </View>
+        );
+      })}
+
       <Text style={styles.h3}>Quẻ liên quan</Text>
       <View style={styles.related}>
         {related.map((r) => (
@@ -102,6 +118,8 @@ const styles = StyleSheet.create({
   badge: { fontSize: 11.5, fontWeight: "700", paddingHorizontal: 8, paddingVertical: 2, borderRadius: 999, overflow: "hidden" },
   badgeGood: { backgroundColor: colors.goodSoft, color: colors.good },
   badgeOff: { backgroundColor: colors.surface, color: colors.muted },
+  inlineCenter: { flexDirection: "row", alignItems: "center", gap: 10, marginTop: 8 },
+  topicMini: { padding: 12, borderRadius: 10, backgroundColor: colors.surface, borderTopWidth: 3, gap: 4 },
   related: { flexDirection: "row", gap: 8 },
   relatedItem: { flex: 1, alignItems: "center", padding: 6, borderRadius: 12, backgroundColor: colors.surface, gap: 4 },
 });
