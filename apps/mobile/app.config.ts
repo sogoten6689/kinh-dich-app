@@ -9,7 +9,7 @@ const config: ExpoConfig = {
   // Phải khớp project trên expo.dev: @sogoten6689/kinh-dich-app (id ở trên), nếu không EAS dừng build khi đọc cấu hình.
   slug: "kinh-dich-app",
   owner: process.env.EXPO_OWNER || "sogoten6689",
-  version: "0.2.0",
+  version: "0.3.0",
   orientation: "portrait",
   userInterfaceStyle: "light",
   icon: "./assets/icon.png",

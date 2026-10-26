@@ -51,6 +51,14 @@ Trạng thái: ✅ đã có · 🟡 một phần · ⬜ chưa làm. Mỗi mã t�
 | F-READ-09 | Giải thích quẻ theo phần | 7 phần: tình thế, cấu tạo (kèm ngũ hành nội–ngoại), hào động, chiều hướng, diễn biến bên trong, góc nhìn khác, nên đọc lời nào | ✅ | ✅ |
 | F-READ-10 | Ý nghĩa vị trí hào | Vai trò từng vị trí 1–6, đắc chính / thất chính, đắc trung | ✅ | ✅ |
 
+### 4.2b Xem theo chủ đề (`F-TOPIC`)
+
+| Mã | Mô tả | Tiêu chí chấp nhận | Web | Mobile |
+|---|---|---|---|---|
+| F-TOPIC-01 | Chọn chủ đề trước khi gieo | Tổng quát · Tình duyên · Công việc · Vận mệnh; Tổng quát không hiện thẻ chủ đề | ✅ | ✅ |
+| F-TOPIC-02 | Luận theo chủ đề | Mức Cát/Bình/Hung hiện tại → chiều hướng, xu hướng (tốt lên / xấu đi / giữ nhịp / đứng yên), lời quẻ chủ và quẻ biến theo chủ đề, thay đổi đến từ nội hay ngoại quái, Thể – Dụng theo chủ đề (Mai Hoa), lời khuyên. Bĩ động 6 hào → Thái: tốt lên | ✅ | ✅ |
+| F-TOPIC-03 | Chủ đề trong chi tiết quẻ | Mức cát/hung và lời tình duyên, công việc, vận mệnh cho đủ 64 quẻ | ✅ | ✅ |
+
 ### 4.3 Tra cứu (`F-LIB`)
 
 | Mã | Mô tả | Tiêu chí chấp nhận | Web | Mobile |

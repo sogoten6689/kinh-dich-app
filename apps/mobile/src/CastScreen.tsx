@@ -6,18 +6,20 @@ import {
   describeLineValue,
   LINE_NAMES,
   tossCoins,
+  TOPICS,
   type CastLines,
   type CastMethod,
   type CoinToss,
   type LinePosition,
   type LineValue,
   type MeihuaResult,
+  type Topic,
 } from "@kinh-dich/core";
 import { useMemo, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Coin } from "./Coin";
 import { ReadingView } from "./ReadingView";
-import { colors } from "./theme";
+import { colors, TOPIC_COLOR } from "./theme";
 
 const howTo = (m: CastMethod) => CAST_METHODS.find((x) => x.id === m)!.howTo;
 
@@ -37,6 +39,7 @@ function Button({ label, onPress, primary, disabled }: { label: string; onPress:
 export function CastScreen() {
   const [method, setMethod] = useState<CastMethod>("coins");
   const [question, setQuestion] = useState("");
+  const [topic, setTopic] = useState<Topic>("general");
   const [tosses, setTosses] = useState<CoinToss[]>([]);
   const [values, setValues] = useState<LineValue[]>([]);
   const [meihua, setMeihua] = useState<MeihuaResult | null>(null);
@@ -86,6 +89,25 @@ export function CastScreen() {
       <View style={styles.field}>
         <Text style={styles.label}>Điều bạn muốn hỏi (không bắt buộc)</Text>
         <TextInput style={styles.input} value={question} onChangeText={setQuestion} placeholder="Ví dụ: Tôi có nên đổi việc trong năm nay?" placeholderTextColor={colors.muted} />
+      </View>
+
+      <View style={styles.topics} accessibilityRole="radiogroup" accessibilityLabel="Chủ đề muốn xem">
+        {TOPICS.map((t) => {
+          const on = topic === t.id;
+          const c = t.id === "general" ? colors.accent : TOPIC_COLOR[t.id];
+          return (
+            <Pressable
+              key={t.id}
+              accessibilityRole="radio"
+              accessibilityState={{ checked: on }}
+              accessibilityHint={t.hint}
+              onPress={() => setTopic(t.id)}
+              style={[styles.topicChip, on && { borderColor: c, borderWidth: 2, backgroundColor: colors.surface }]}
+            >
+              <Text style={[styles.topicText, on && { color: c, fontWeight: "700" }]}>{t.name}</Text>
+            </Pressable>
+          );
+        })}
       </View>
 
       <View style={styles.methods} accessibilityRole="radiogroup">
@@ -161,7 +183,7 @@ export function CastScreen() {
         )}
       </View>
 
-      {reading && <ReadingView reading={reading} question={question.trim() || undefined} meihua={meihua} />}
+      {reading && <ReadingView reading={reading} question={question.trim() || undefined} meihua={meihua} topic={topic} />}
     </View>
   );
 }
@@ -220,6 +242,9 @@ const styles = StyleSheet.create({
   field: { gap: 6 },
   label: { fontSize: 13, color: colors.muted },
   input: { borderWidth: 1, borderColor: colors.line, backgroundColor: colors.card, borderRadius: 10, padding: 12, color: colors.fg, fontSize: 16 },
+  topics: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
+  topicChip: { paddingVertical: 8, paddingHorizontal: 14, borderRadius: 999, borderWidth: 1, borderColor: colors.line, backgroundColor: colors.card },
+  topicText: { color: colors.fg, fontWeight: "500" },
   methods: { gap: 8 },
   method: { padding: 12, borderRadius: 12, borderWidth: 1, borderColor: colors.line, backgroundColor: colors.card, gap: 2 },
   methodActive: { borderColor: colors.accent, borderWidth: 2, backgroundColor: colors.accentSoft },

@@ -1,4 +1,4 @@
-import { ELEMENT_NAMES, explainHexagram, invertedHexagram, nuclearHexagram, oppositeHexagram, type Hexagram } from "@kinh-dich/core";
+import { ELEMENT_NAMES, explainHexagram, hexagramTopics, invertedHexagram, LUCK_LABEL, nuclearHexagram, oppositeHexagram, TOPICS, type Hexagram } from "@kinh-dich/core";
 import { useEffect, useRef } from "react";
 import { ELEMENT_COLOR } from "../elements";
 import { HexagramFigure } from "./HexagramFigure";
@@ -12,6 +12,7 @@ interface Props {
 
 export function HexagramDetail({ hexagram: h, onSelect, onClose }: Props) {
   const e = explainHexagram(h);
+  const topics = hexagramTopics(h);
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     ref.current?.scrollIntoView?.({ behavior: "smooth", block: "start" });
@@ -91,6 +92,18 @@ export function HexagramDetail({ hexagram: h, onSelect, onClose }: Props) {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <h3>
+        Theo chủ đề <span className={`luck luck-${topics.luck}`}>{LUCK_LABEL[topics.luck]}</span>
+      </h3>
+      <div className="topic-grid">
+        {TOPICS.filter((t) => t.id !== "general").map((t) => (
+          <div key={t.id} className={`topic-mini topic-${t.id}`}>
+            <strong>{t.name}</strong>
+            <p>{topics[t.id as "love" | "career" | "fortune"]}</p>
+          </div>
+        ))}
       </div>
 
       <h3>Quẻ liên quan</h3>

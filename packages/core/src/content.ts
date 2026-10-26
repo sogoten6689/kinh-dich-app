@@ -3,7 +3,7 @@
 export const APP_INFO = {
   name: "Kinh Dịch",
   tagline: "Gieo quẻ · Tra cứu · Giải nghĩa",
-  version: "0.2.0",
+  version: "0.3.0",
   author: "Lam Nguyen",
   organization: "Egitech",
 } as const;
@@ -41,6 +41,7 @@ export const ABOUT = {
     ["Gieo quẻ", "bằng 3 đồng xu (từng hào, có hoạt ảnh), cỏ thi, hoặc Mai Hoa Dịch Số theo hai số."],
     ["Lập quẻ đầy đủ", "quẻ chủ, hào động, quẻ biến, hỗ quái, thác quái, tổng quái."],
     ["Giải thích", "từng phần: cấu tạo quẻ, quan hệ ngũ hành, ý nghĩa vị trí hào, nên đọc lời nào."],
+    ["Xem theo chủ đề", "tình duyên, công việc, vận mệnh: mức cát/hung, chiều hướng và lời khuyên."],
     ["Thể – Dụng", "theo Mai Hoa, minh họa trên vòng ngũ hành."],
     ["Tra cứu", "64 quẻ và bát quái Tiên Thiên / Hậu Thiên."],
   ] as readonly (readonly [string, string])[],

@@ -96,6 +96,46 @@ describe("web app", () => {
     expect(screen.getByRole("button", { name: /Khảm — Nước, phương Tây/ })).toBeInTheDocument();
   });
 
+  it("F-TOPIC-01 chọn chủ đề Tình duyên rồi gieo → có thẻ luận tình duyên", () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole("radio", { name: "Tình duyên" }));
+    expect(screen.getByRole("radio", { name: "Tình duyên" })).toHaveAttribute("aria-checked", "true");
+    fireEvent.click(screen.getByRole("button", { name: /Gieo nhanh/ }));
+    const card = screen.getByRole("region", { name: "Luận về Tình duyên" });
+    expect(within(card).getAllByText("Hiện tại")).toHaveLength(2); // huy hiệu cát/hung + tiêu đề mục
+    expect(within(card).getByText("Thay đổi đến từ đâu")).toBeInTheDocument();
+    expect(within(card).getByText("Lời khuyên")).toBeInTheDocument();
+    expect(screen.getByText("Giải thích chung")).toBeInTheDocument();
+  });
+
+  it("F-TOPIC-02 Mai Hoa + Công việc: có phần Thể – Dụng theo chủ đề", () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole("radio", { name: "Công việc" }));
+    chooseMethod(/Mai Hoa/);
+    fireEvent.change(screen.getByLabelText("Số thứ nhất"), { target: { value: "5" } });
+    fireEvent.change(screen.getByLabelText("Số thứ hai"), { target: { value: "3" } });
+    fireEvent.click(screen.getByRole("button", { name: "Lập quẻ" }));
+    const card = screen.getByRole("region", { name: "Luận về Công việc" });
+    expect(card).toHaveTextContent("Dụng là công việc");
+    expect(card).toHaveTextContent("Phong Hỏa Gia Nhân");
+  });
+
+  it("F-TOPIC-01 chủ đề Tổng quát không hiện thẻ chủ đề", () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: /Gieo nhanh/ }));
+    expect(screen.queryByRole("region", { name: /Luận về/ })).not.toBeInTheDocument();
+  });
+
+  it("F-TOPIC-03 chi tiết quẻ có lời theo 3 chủ đề", () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: "64 quẻ" }));
+    fireEvent.click(screen.getByRole("button", { name: "Quẻ 11 Địa Thiên Thái" }));
+    const detail = screen.getByRole("article", { name: "Chi tiết quẻ 11" });
+    expect(within(detail).getByText(/hợp cưới hỏi/)).toBeInTheDocument();
+    expect(within(detail).getByText("Công việc")).toBeInTheDocument();
+    expect(within(detail).getByText("Vận mệnh")).toBeInTheDocument();
+  });
+
   it("F-ABOUT-01 trang giới thiệu có tác giả", () => {
     render(<App />);
     fireEvent.click(screen.getByRole("button", { name: "Giới thiệu" }));

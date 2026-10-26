@@ -9,3 +9,4 @@ export * from "./rng";
 export * from "./explain";
 export * from "./glossary";
 export * from "./content";
+export * from "./topics";

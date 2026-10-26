@@ -1,6 +1,7 @@
-import { explainReading, lineLabel, type ExplanationKey, type MeihuaResult, type Reading } from "@kinh-dich/core";
+import { explainReading, lineLabel, type ExplanationKey, type MeihuaResult, type Reading, type Topic } from "@kinh-dich/core";
 import { HexagramFigure } from "./HexagramFigure";
 import { Term } from "./Term";
+import { TopicCard } from "./TopicCard";
 import { WuxingCycle } from "./WuxingCycle";
 
 const SECTION_TERM: Partial<Record<ExplanationKey, string>> = {
@@ -16,10 +17,11 @@ const SECTION_TERM: Partial<Record<ExplanationKey, string>> = {
 interface Props {
   reading: Reading;
   question?: string;
+  topic?: Topic;
   meihua?: MeihuaResult | null;
 }
 
-export function ReadingView({ reading, question, meihua }: Props) {
+export function ReadingView({ reading, question, meihua, topic = "general" }: Props) {
   const { primary, transformed, nuclear, changingLines, cast } = reading;
   const sections = explainReading(reading);
   return (
@@ -71,6 +73,9 @@ export function ReadingView({ reading, question, meihua }: Props) {
         </div>
       )}
 
+      {topic !== "general" && <TopicCard reading={reading} topic={topic} meihua={meihua} />}
+
+      {topic !== "general" && <h3 className="explain-heading">Giải thích chung</h3>}
       <ol className="explain">
         {sections.map((s) => (
           <li key={s.key} className={`explain-${s.key}`}>
