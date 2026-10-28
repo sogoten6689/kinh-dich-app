@@ -17,18 +17,20 @@ const SECTION_TERM: Partial<Record<ExplanationKey, string>> = {
 interface Props {
   reading: Reading;
   question?: string;
+  /** Tên gọi của người hỏi (từ hồ sơ). */
+  asker?: string;
   topic?: Topic;
   meihua?: MeihuaResult | null;
 }
 
-export function ReadingView({ reading, question, meihua, topic = "general" }: Props) {
+export function ReadingView({ reading, question, asker, meihua, topic = "general" }: Props) {
   const { primary, transformed, nuclear, changingLines, cast } = reading;
   const sections = explainReading(reading);
   return (
     <section className="reading" data-testid="reading" aria-label="Kết quả gieo quẻ">
       {question && (
         <p className="question">
-          <span>Câu hỏi</span> {question}
+          <span>{asker ? `${asker} hỏi` : "Câu hỏi"}</span> {question}
         </p>
       )}
 

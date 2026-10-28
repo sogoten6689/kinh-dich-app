@@ -1,6 +1,7 @@
 import {
   buildReading,
   CAST_METHODS,
+  givenName,
   castByNumbers,
   castByYarrow,
   describeLineValue,
@@ -13,11 +14,13 @@ import {
   type LinePosition,
   type LineValue,
   type MeihuaResult,
+  type Profile,
   type Topic,
 } from "@kinh-dich/core";
 import { useMemo, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Coin } from "./Coin";
+import { Greeting } from "./Greeting";
 import { ReadingView } from "./ReadingView";
 import { colors, TOPIC_COLOR } from "./theme";
 
@@ -36,7 +39,7 @@ function Button({ label, onPress, primary, disabled }: { label: string; onPress:
   );
 }
 
-export function CastScreen() {
+export function CastScreen({ profile = null, onSetupProfile = () => {} }: { profile?: Profile | null; onSetupProfile?: () => void }) {
   const [method, setMethod] = useState<CastMethod>("coins");
   const [question, setQuestion] = useState("");
   const [topic, setTopic] = useState<Topic>("general");
@@ -86,6 +89,8 @@ export function CastScreen() {
 
   return (
     <View style={styles.container}>
+      <Greeting profile={profile} onSetup={onSetupProfile} />
+
       <View style={styles.field}>
         <Text style={styles.label}>Điều bạn muốn hỏi (không bắt buộc)</Text>
         <TextInput style={styles.input} value={question} onChangeText={setQuestion} placeholder="Ví dụ: Tôi có nên đổi việc trong năm nay?" placeholderTextColor={colors.muted} />
@@ -183,7 +188,7 @@ export function CastScreen() {
         )}
       </View>
 
-      {reading && <ReadingView reading={reading} question={question.trim() || undefined} meihua={meihua} topic={topic} />}
+      {reading && <ReadingView reading={reading} question={question.trim() || undefined} asker={profile ? givenName(profile.name) : undefined} meihua={meihua} topic={topic} />}
     </View>
   );
 }

@@ -1,7 +1,7 @@
 # Kinh Dịch App — hướng dẫn cho Claude
 
 Ứng dụng Kinh Dịch (I Ching) gồm **web** và **mobile**, dùng chung một lõi tính toán.
-Đặc tả tính năng: `docs/SPEC.md`. Kiến thức nghiệp vụ: `docs/kinh-dich.md`. Deploy: `docs/DEPLOY.md`.
+Đặc tả tính năng: `docs/SPEC.md`. Kiến thức nghiệp vụ: `docs/kinh-dich.md`, thần số học: `docs/than-so-hoc.md`. Deploy: `docs/DEPLOY.md`.
 
 ## Cấu trúc (npm workspaces)
 

@@ -16,14 +16,27 @@ const SECTION_TERM: Partial<Record<ExplanationKey, string>> = {
   guide: "thoan-tu",
 };
 
-export function ReadingView({ reading, question, meihua, topic = "general" }: { reading: Reading; question?: string; meihua?: MeihuaResult | null; topic?: Topic }) {
+export function ReadingView({
+  reading,
+  question,
+  asker,
+  meihua,
+  topic = "general",
+}: {
+  reading: Reading;
+  question?: string;
+  /** Tên gọi của người hỏi (từ hồ sơ). */
+  asker?: string;
+  meihua?: MeihuaResult | null;
+  topic?: Topic;
+}) {
   const { primary, transformed, nuclear, changingLines, cast } = reading;
   const sections = explainReading(reading);
   return (
     <View style={styles.card} accessibilityLabel="Kết quả gieo quẻ">
       {question ? (
         <View>
-          <Text style={styles.eyebrow}>CÂU HỎI</Text>
+          <Text style={styles.eyebrow}>{asker ? `${asker.toUpperCase()} HỎI` : "CÂU HỎI"}</Text>
           <Text style={styles.question}>{question}</Text>
         </View>
       ) : null}

@@ -1,17 +1,20 @@
-import { APP_INFO } from "@kinh-dich/core";
+import { APP_INFO, type Profile } from "@kinh-dich/core";
 import { StatusBar } from "expo-status-bar";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import { AboutScreen } from "./src/AboutScreen";
 import { BaguaScreen } from "./src/BaguaScreen";
 import { CastScreen } from "./src/CastScreen";
 import { LibraryScreen } from "./src/LibraryScreen";
 import { Logo } from "./src/Logo";
+import { NumerologyScreen } from "./src/NumerologyScreen";
+import { clearProfile, loadProfile, saveProfile } from "./src/profileStore";
 import { colors } from "./src/theme";
 
-/** Bốn tab giống web: Gieo quẻ · 64 quẻ · Bát quái · Giới thiệu. */
+/** Năm tab giống web: Gieo quẻ · Thần số · 64 quẻ · Bát quái · Giới thiệu. */
 const TABS = [
   { id: "cast", label: "Gieo quẻ" },
+  { id: "numerology", label: "Thần số" },
   { id: "library", label: "64 quẻ" },
   { id: "bagua", label: "Bát quái" },
   { id: "about", label: "Giới thiệu" },
@@ -20,7 +23,12 @@ type Tab = (typeof TABS)[number]["id"];
 
 export default function App() {
   const [tab, setTab] = useState<Tab>("cast");
+  const [profile, setProfile] = useState<Profile | null>(null);
   const scroll = useRef<ScrollView>(null);
+
+  useEffect(() => {
+    loadProfile().then(setProfile);
+  }, []);
   const scrollTop = () => scroll.current?.scrollTo({ y: 0, animated: true });
 
   return (
@@ -50,7 +58,28 @@ export default function App() {
         ))}
       </View>
       <ScrollView ref={scroll} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-        {tab === "cast" && <CastScreen />}
+        {tab === "cast" && (
+          <CastScreen
+            profile={profile}
+            onSetupProfile={() => {
+              setTab("numerology");
+              scrollTop();
+            }}
+          />
+        )}
+        {tab === "numerology" && (
+          <NumerologyScreen
+            profile={profile}
+            onSave={(p) => {
+              setProfile(p);
+              void saveProfile(p);
+            }}
+            onClear={() => {
+              setProfile(null);
+              void clearProfile();
+            }}
+          />
+        )}
         {tab === "library" && <LibraryScreen onScrollTop={scrollTop} />}
         {tab === "bagua" && <BaguaScreen />}
         {tab === "about" && <AboutScreen />}
@@ -68,9 +97,9 @@ const styles = StyleSheet.create({
   brand: { fontSize: 20, fontWeight: "700", fontFamily: "serif", color: colors.fg },
   tagline: { fontSize: 11.5, color: colors.muted },
   tabs: { flexDirection: "row", gap: 4, margin: 16, marginBottom: 4, padding: 4, borderRadius: 999, backgroundColor: colors.surface },
-  tab: { flex: 1, paddingVertical: 8, borderRadius: 999, alignItems: "center" },
+  tab: { flex: 1, paddingVertical: 8, paddingHorizontal: 2, borderRadius: 999, alignItems: "center" },
   tabActive: { backgroundColor: colors.card },
-  tabText: { color: colors.muted, fontSize: 13 },
+  tabText: { color: colors.muted, fontSize: 12 },
   tabTextActive: { color: colors.fg, fontWeight: "700" },
   content: { padding: 16, gap: 16, paddingBottom: 40 },
   footer: { textAlign: "center", color: colors.muted, fontSize: 12, marginTop: 8 },

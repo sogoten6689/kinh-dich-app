@@ -3,7 +3,7 @@
 export const APP_INFO = {
   name: "Kinh Dịch",
   tagline: "Gieo quẻ · Tra cứu · Giải nghĩa",
-  version: "0.3.0",
+  version: "0.4.0",
   author: "Lam Nguyen",
   organization: "Egitech",
   /** Trang web chính thức. */
@@ -46,6 +46,7 @@ export const ABOUT = {
     ["Lập quẻ đầy đủ", "quẻ chủ, hào động, quẻ biến, hỗ quái, thác quái, tổng quái."],
     ["Giải thích", "từng phần: cấu tạo quẻ, quan hệ ngũ hành, ý nghĩa vị trí hào, nên đọc lời nào."],
     ["Xem theo chủ đề", "tình duyên, công việc, vận mệnh: mức cát/hung, chiều hướng và lời khuyên."],
+    ["Thần số học", "từ họ tên và ngày sinh: số chủ đạo, linh hồn, nhân cách, sứ mệnh, năm/ngày cá nhân, biểu đồ ngày sinh; tuổi, tuổi mụ, can chi."],
     ["Thể – Dụng", "theo Mai Hoa, minh họa trên vòng ngũ hành."],
     ["Tra cứu", "64 quẻ và bát quái Tiên Thiên / Hậu Thiên."],
   ] as readonly (readonly [string, string])[],
@@ -60,5 +61,9 @@ export const ABOUT = {
     "Mỗi quẻ đơn thuộc một hành. Đi quanh vòng tròn là tương sinh (Mộc sinh Hỏa, Hỏa sinh Thổ, Thổ sinh Kim, Kim sinh Thủy, Thủy sinh Mộc); các đường chéo là tương khắc (Mộc khắc Thổ, Thổ khắc Thủy, Thủy khắc Hỏa, Hỏa khắc Kim, Kim khắc Mộc).",
   bagua:
     "Tám quẻ đơn là nền tảng của 64 quẻ. Mỗi quẻ có ba hào, tượng trưng cho một hiện tượng tự nhiên, một hành và một phương hướng. Bấm vào một quẻ để xem chi tiết.",
+  numerology:
+    "Thần số học Pythagoras đọc tính cách và chu kỳ của bạn qua các con số trong họ tên và ngày sinh. Hãy xem như một tấm gương để hiểu mình hơn, không phải lời phán định.",
+  privacy: "Họ tên và ngày sinh chỉ được lưu trên máy này để app gọi tên bạn; không gửi đi đâu cả.",
+  noProfile: "Chào bạn! Nhập tên và ngày sinh ở mục Thần số để app gọi tên bạn và gợi ý theo ngày của riêng bạn.",
   library: "Mỗi quẻ gồm hai quẻ đơn chồng lên nhau. Bấm vào một quẻ để xem cấu tạo, ý nghĩa từng hào và các quẻ liên quan.",
 } as const;
