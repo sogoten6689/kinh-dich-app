@@ -12,3 +12,5 @@ export * from "./content";
 export * from "./topics";
 export * from "./buildinfo";
 export * from "./qr";
+export * from "./numerology";
+export * from "./profile";

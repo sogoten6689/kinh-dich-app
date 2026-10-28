@@ -59,6 +59,19 @@ Trạng thái: ✅ đã có · 🟡 một phần · ⬜ chưa làm. Mỗi mã t�
 | F-TOPIC-02 | Luận theo chủ đề | Mức Cát/Bình/Hung hiện tại → chiều hướng, xu hướng (tốt lên / xấu đi / giữ nhịp / đứng yên), lời quẻ chủ và quẻ biến theo chủ đề, thay đổi đến từ nội hay ngoại quái, Thể – Dụng theo chủ đề (Mai Hoa), lời khuyên. Bĩ động 6 hào → Thái: tốt lên | ✅ | ✅ |
 | F-TOPIC-03 | Chủ đề trong chi tiết quẻ | Mức cát/hung và lời tình duyên, công việc, vận mệnh cho đủ 64 quẻ | ✅ | ✅ |
 
+### 4.2c Hồ sơ cá nhân & thần số học (`F-PROFILE`, `F-NUM`)
+
+Quy tắc tính: `docs/than-so-hoc.md`.
+
+| Mã | Mô tả | Tiêu chí chấp nhận | Web | Mobile |
+|---|---|---|---|---|
+| F-PROFILE-01 | Hồ sơ: họ tên + ngày sinh | Nhập dd/mm/yyyy, báo lỗi dễ hiểu (ngày không có thật, tương lai, sai định dạng); chỉ lưu trên máy (localStorage / AsyncStorage); xóa được; tuổi, tuổi mụ, can chi, con giáp, lưu ý sinh trước Tết | ✅ | ✅ |
+| F-PROFILE-02 | Lời chào cá nhân | Tab Gieo quẻ gọi tên theo buổi ("Chào buổi sáng, An!"); chưa có hồ sơ thì mời nhập | ✅ | ✅ |
+| F-PROFILE-03 | Lời nhắn theo ngày, câu hỏi đứng tên | Nhắc ngày cá nhân hôm nay và ý nghĩa; kết quả gieo ghi "An hỏi" thay cho "Câu hỏi" | ✅ | ✅ |
+| F-NUM-01 | Các con số từ ngày sinh | Số chủ đạo (giữ 11/22/33), số ngày sinh, năm/tháng/ngày cá nhân; 15/08/1990 → 33/6 | ✅ | ✅ |
+| F-NUM-02 | Các con số từ họ tên | Sứ mệnh, linh hồn, nhân cách theo bảng Pythagoras, bỏ dấu tiếng Việt; "Nguyễn Văn An" → 3, 8, 4 | ✅ | ✅ |
+| F-NUM-03 | Biểu đồ ngày sinh | Lưới 3×3, mũi tên đầy (đường liền) và mũi tên trống (đường đứt), ý nghĩa từng mũi tên | ✅ | ✅ |
+
 ### 4.3 Tra cứu (`F-LIB`)
 
 | Mã | Mô tả | Tiêu chí chấp nhận | Web | Mobile |

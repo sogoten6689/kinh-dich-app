@@ -6,6 +6,7 @@ import { HexagramFigure } from "../src/components/HexagramFigure";
 
 beforeEach(() => {
   history.replaceState(null, "", "/");
+  localStorage.clear();
 });
 
 function chooseMethod(name: RegExp) {
@@ -167,6 +168,55 @@ describe("web app", () => {
     expect(within(dl).getByRole("link", { name: "Tải app Android (APK)" })).toHaveAttribute("href", top.getAttribute("href"));
     const qr = within(dl).getByRole("img", { name: "Mã QR tải app Android" });
     expect(qr.querySelector("path")?.getAttribute("d")).toMatch(/^M\d+ \d+h1v1h-1z/);
+  });
+
+  it("F-PROFILE-02 chưa có hồ sơ: lời mời nhập tên ở tab Gieo quẻ", () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: "Nhập tên và ngày sinh" }));
+    expect(screen.getByRole("heading", { name: "Thần số học" })).toBeInTheDocument();
+  });
+
+  it("F-NUM-01 nhập họ tên + ngày sinh → số chủ đạo, các con số, biểu đồ; lưu hồ sơ", () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: "Thần số" }));
+    fireEvent.change(screen.getByLabelText("Họ và tên"), { target: { value: "Nguyễn Văn An" } });
+    fireEvent.change(screen.getByLabelText("Ngày sinh (dương lịch)"), { target: { value: "15/08/1990" } });
+    fireEvent.click(screen.getByRole("button", { name: "Xem thần số học" }));
+    const result = screen.getByRole("region", { name: "Kết quả thần số học" });
+    expect(within(result).getByText("33/6")).toBeInTheDocument();
+    expect(within(result).getByText("Người thầy chữa lành (33/6)")).toBeInTheDocument();
+    expect(within(result).getByText(/Canh Ngọ · con Ngựa/)).toBeInTheDocument();
+    expect(within(result).getByRole("img", { name: "Biểu đồ ngày sinh" })).toBeInTheDocument();
+    expect(within(result).getByText(/Mũi tên Quyết tâm/)).toBeInTheDocument();
+    expect(localStorage.getItem("kinhdich.profile")).toContain("Nguyễn Văn An");
+  });
+
+  it("F-NUM-01 ngày sinh sai thì báo lỗi dễ hiểu", () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: "Thần số" }));
+    fireEvent.change(screen.getByLabelText("Họ và tên"), { target: { value: "An" } });
+    fireEvent.change(screen.getByLabelText("Ngày sinh (dương lịch)"), { target: { value: "31/02/1990" } });
+    fireEvent.click(screen.getByRole("button", { name: "Xem thần số học" }));
+    expect(screen.getByRole("alert")).toHaveTextContent("không có thật");
+  });
+
+  it("F-PROFILE-03 có hồ sơ: gọi tên ở tab Gieo quẻ và câu hỏi đứng tên người hỏi", () => {
+    localStorage.setItem("kinhdich.profile", JSON.stringify({ name: "Trần Thị Lan", birth: { day: 2, month: 3, year: 1995 } }));
+    render(<App />);
+    expect(screen.getByLabelText("Lời chào")).toHaveTextContent(/Chào buổi .+, Lan!/);
+    expect(screen.getByLabelText("Lời chào")).toHaveTextContent("ngày cá nhân số");
+    fireEvent.change(screen.getByLabelText(/Điều bạn muốn hỏi/), { target: { value: "Công việc tháng này?" } });
+    fireEvent.click(screen.getByRole("button", { name: /Gieo nhanh/ }));
+    expect(within(screen.getByTestId("reading")).getByText("Lan hỏi")).toBeInTheDocument();
+  });
+
+  it("F-PROFILE-01 xóa thông tin đã lưu", () => {
+    localStorage.setItem("kinhdich.profile", JSON.stringify({ name: "Trần Thị Lan", birth: { day: 2, month: 3, year: 1995 } }));
+    render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: "Thần số" }));
+    fireEvent.click(screen.getByRole("button", { name: "Xóa thông tin đã lưu" }));
+    expect(localStorage.getItem("kinhdich.profile")).toBeNull();
+    expect(screen.queryByRole("region", { name: "Kết quả thần số học" })).not.toBeInTheDocument();
   });
 
   it("vẽ hào thượng ở trên, hào sơ ở dưới, đánh dấu hào động", () => {

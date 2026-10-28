@@ -1,6 +1,7 @@
 import {
   buildReading,
   CAST_METHODS,
+  givenName,
   castByNumbers,
   castByYarrow,
   describeLineValue,
@@ -13,17 +14,19 @@ import {
   type LinePosition,
   type LineValue,
   type MeihuaResult,
+  type Profile,
   type Topic,
 } from "@kinh-dich/core";
 import { useMemo, useState, type FormEvent } from "react";
 import { Coin } from "./Coin";
+import { Greeting } from "./Greeting";
 import { ReadingView } from "./ReadingView";
 import { Term } from "./Term";
 
 type Method = CastMethod;
 const howTo = (m: Method) => CAST_METHODS.find((x) => x.id === m)!.howTo;
 
-export function CastPanel() {
+export function CastPanel({ profile = null, onSetupProfile = () => {} }: { profile?: Profile | null; onSetupProfile?: () => void }) {
   const [method, setMethod] = useState<Method>("coins");
   const [question, setQuestion] = useState("");
   const [topic, setTopic] = useState<Topic>("general");
@@ -79,6 +82,8 @@ export function CastPanel() {
 
   return (
     <div className="cast-panel">
+      <Greeting profile={profile} onSetup={onSetupProfile} />
+
       <section className="cast-setup" aria-label="Chuẩn bị gieo quẻ">
         <label className="question-input" htmlFor="question">
           <span>Điều bạn muốn hỏi (không bắt buộc)</span>
@@ -217,7 +222,7 @@ export function CastPanel() {
         </section>
       )}
 
-      {reading && <ReadingView reading={reading} question={question.trim() || undefined} meihua={meihua} topic={topic} />}
+      {reading && <ReadingView reading={reading} question={question.trim() || undefined} asker={profile ? givenName(profile.name) : undefined} meihua={meihua} topic={topic} />}
     </div>
   );
 }

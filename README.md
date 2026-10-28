@@ -12,10 +12,11 @@ Mã QR cài app Android có ở nút **"Tải app Android"** trên web và trong
 - **Lập quẻ**: quẻ chủ, hào động (○ ×), quẻ biến, hỗ quái, thác quái, tổng quái; tên hào truyền thống; quy tắc đọc theo số hào động (Chu Hy).
 - **Giải thích 7 phần**: tình thế, cấu tạo quẻ và ngũ hành nội–ngoại, hào động và ý nghĩa vị trí, chiều hướng, diễn biến bên trong, góc nhìn khác, nên đọc lời nào.
 - **Xem theo chủ đề**: Tình duyên, Công việc, Vận mệnh — mức Cát/Bình/Hung, chiều hướng, thay đổi đến từ đâu, lời khuyên.
+- **Hồ sơ & thần số học**: nhập họ tên, ngày sinh → app gọi tên bạn, nhắc ngày cá nhân; số chủ đạo, linh hồn, nhân cách, sứ mệnh, năm/tháng/ngày cá nhân, biểu đồ ngày sinh; tuổi, tuổi mụ, can chi. Thông tin chỉ lưu trên máy.
 - **Thể – Dụng** (Mai Hoa) trên vòng ngũ hành tương sinh – tương khắc.
 - **Tra cứu**: 64 quẻ (bảng 6 hào, đắc chính / đắc trung, quẻ liên quan, lời theo chủ đề), bát quái Tiên Thiên / Hậu Thiên, thuật ngữ bấm để xem giải thích.
 
-Tài liệu: [Đặc tả](docs/SPEC.md) · [Nghiệp vụ Kinh Dịch](docs/kinh-dich.md) · [Deploy chi tiết](docs/DEPLOY.md) · [Hướng dẫn cho Claude](CLAUDE.md)
+Tài liệu: [Đặc tả](docs/SPEC.md) · [Nghiệp vụ Kinh Dịch](docs/kinh-dich.md) · [Thần số học](docs/than-so-hoc.md) · [Deploy chi tiết](docs/DEPLOY.md) · [Hướng dẫn cho Claude](CLAUDE.md)
 
 ## Chạy nhanh
 

@@ -1,4 +1,4 @@
-import { APP_INFO } from "@kinh-dich/core";
+import { APP_INFO, type Profile } from "@kinh-dich/core";
 import { useEffect, useState } from "react";
 import { AboutView } from "./components/AboutView";
 import { BaguaView } from "./components/BaguaView";
@@ -6,9 +6,12 @@ import { CastPanel } from "./components/CastPanel";
 import { DownloadMenu } from "./components/DownloadMenu";
 import { HexagramList } from "./components/HexagramList";
 import { Logo } from "./components/Logo";
+import { NumerologyView } from "./components/NumerologyView";
+import { clearProfile, loadProfile, saveProfile } from "./profileStore";
 
 const TABS = [
   { id: "gieo-que", label: "Gieo quẻ" },
+  { id: "than-so", label: "Thần số" },
   { id: "64-que", label: "64 quẻ" },
   { id: "bat-quai", label: "Bát quái" },
   { id: "gioi-thieu", label: "Giới thiệu" },
@@ -23,6 +26,7 @@ function tabFromHash(): Tab {
 
 export function App() {
   const [tab, setTab] = useState<Tab>(tabFromHash);
+  const [profile, setProfile] = useState<Profile | null>(loadProfile);
 
   useEffect(() => {
     const onHash = () => setTab(tabFromHash());
@@ -55,7 +59,20 @@ export function App() {
         </nav>
       </header>
       <main>
-        {tab === "gieo-que" && <CastPanel />}
+        {tab === "gieo-que" && <CastPanel profile={profile} onSetupProfile={() => go("than-so")} />}
+        {tab === "than-so" && (
+          <NumerologyView
+            profile={profile}
+            onSave={(p) => {
+              saveProfile(p);
+              setProfile(p);
+            }}
+            onClear={() => {
+              clearProfile();
+              setProfile(null);
+            }}
+          />
+        )}
         {tab === "64-que" && <HexagramList />}
         {tab === "bat-quai" && <BaguaView />}
         {tab === "gioi-thieu" && <AboutView />}
